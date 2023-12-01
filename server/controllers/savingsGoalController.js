@@ -36,6 +36,22 @@ const savingsGoalController = {
             res.status(500).json({ message: error.message });
         }
     },
+    async updateSavingsGoal(req, res) {
+        try {
+            const updatedSavingsGoal = await SavingsGoal.findByIdAndUpdate(
+                req.params.id,
+                req.body,
+                { new: true }
+            );
+            if (!updatedSavingsGoal) {
+                return res.status(404).json({ message: 'Savings goal not found' });
+            }
+            res.json(updatedSavingsGoal);
+        } catch (error) {
+            res.status(400).json({ message: error.message });
+        }
+    },
+
 };
 
 
