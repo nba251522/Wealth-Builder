@@ -83,5 +83,15 @@ const userController = {
             res.status(500).json({ message: error.message });
         }
     },
+    // Changes a user's email address based on the new email address provided
+    async updateEmail(req, res) {
+        try {
+            const user = await User.findByIdAndUpdate(req.user.id, { email: req.body.newEmail }, { new: true });
+            res.json(user);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+
 };
 module.exports = userController;
