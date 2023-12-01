@@ -65,5 +65,23 @@ const userController = {
             res.status(500).json({ message: error.message });
         }
     },
+    // Changing a user's password
+    async changePassword(req, res) {
+        try {
+            const user = await User.findById(req.user.id);
+            const isMatch = await bcrypt.compare(req.body.currentPassword, user.password);
+            if (!isMatch) {
+                return res.status(400).json({ message: 'Current password is incorrect' });
+            }
+
+            const newPassword = await bcrypt.hash(req.body.newPassword, 10);
+            user.password = newPassword;
+            await user.save();
+
+            res.json({ message: 'Password updated successfully' });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
 };
 module.exports = userController;
