@@ -1,71 +1,76 @@
 const Transaction = require('../../models/Transaction');
 
-const transactionController = {
-    async addTransaction(req, res) {
-        try {
-            const { amount, type, category, description, date } = req.body;
-
-            const newTransaction = new Transaction({
-                user: req.user.id, 
-                amount,
-                type,
-                category,
-                description,
-                date
-            });
-
-            const savedTransaction = await newTransaction.save();
-            res.status(201).json(savedTransaction);
-        } catch (error) {
-            res.status(400).json({ message: error.message });
-        }
-    },
-    // Get all transactions
-    async getTransactions(req, res) {
-        try {
-            const transactions = await Transaction.find({ user: req.user.id });
-            res.json(transactions);
-        } catch (error) {
-            res.status(500).json({ message: error.message });
-        }
-    },
-    // Fetch a single transaction
-    async getTransaction(req, res) {
-        try {
-            const transaction = await Transaction.findById(req.params.id);
-            res.json(transaction);
-        } catch (error) {
-            res.status(500).json({ message: error.message });
-        }
-    },
-
-    async updateTransaction(req, res) {
-        try {
-            const updatedTransaction = await Transaction.findByIdAndUpdate(
-                req.params.id,
-                req.body,
-                { new: true }
-            );
-            if (!updatedTransaction) {
-                return res.status(404).json({ message: 'Transaction not found' });
+const transactionResolvers = {
+    Query: {
+        // Get all transactions for a user
+        getTransactions: async (_, args, context) => {
+            try {
+                const transactions = await Transaction.find({ user: context.user.id });
+                return transactions;
+            } catch (error) {
+                throw new Error(error.message);
             }
-            res.json(updatedTransaction);
-        } catch (error) {
-            res.status(400).json({ message: error.message });
-        }
-    },
-
-    async deleteTransaction(req, res) {
-        try {
-            const transaction = await Transaction.findById(req.params.id);
-            if (!transaction) {
-                return res.status(404).json({ message: 'Transaction not found' });
+        },
+        // Fetch a single transaction
+        getTransaction: async (_, { id }, context) => {
+            try {
+                const transaction = await Transaction.findById(id);
+                if (!transaction) {
+                    throw new Error('Transaction not found');
+                }
+                return transaction;
+            } catch (error) {
+                throw new Error(error.message);
             }
-            await transaction.remove();
-            res.json({ message: 'Transaction deleted successfully' });
-        } catch (error) {
-            res.status(500).json({ message: error.message });
-        }
+        },
+    },
+    Mutation: {
+        // Add a new transaction
+        addTransaction: async (_, { amount, type, category, description, date }, context) => {
+            try {
+                const newTransaction = new Transaction({
+                    user: context.user.id,
+                    amount,
+                    type,
+                    category,
+                    description,
+                    date
+                });
+                return await newTransaction.save();
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
+        // Update a transaction
+        updateTransaction: async (_, { id, updateData }, context) => {
+            try {
+                const updatedTransaction = await Transaction.findByIdAndUpdate(
+                    id,
+                    updateData,
+                    { new: true }
+                );
+                if (!updatedTransaction) {
+                    throw new Error('Transaction not found');
+                }
+                return updatedTransaction;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
+        // Delete a transaction
+        deleteTransaction: async (_, { id }, context) => {
+            try {
+                const transaction = await Transaction.findById(id);
+                if (!transaction) {
+                    throw new Error('Transaction not found');
+                }
+                await transaction.remove();
+                return { message: 'Transaction deleted successfully' };
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
     },
 };
-module.exports = transactionController;
+
+module.exports = transactionResolvers;
