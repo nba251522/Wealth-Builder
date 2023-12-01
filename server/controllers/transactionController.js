@@ -21,6 +21,22 @@ const transactionController = {
             res.status(400).json({ message: error.message });
         }
     },
-
+    async getTransactions(req, res) {
+        try {
+            const transactions = await Transaction.find({ user: req.user.id });
+            res.json(transactions);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    
+    async getTransaction(req, res) {
+        try {
+            const transaction = await Transaction.findById(req.params.id);
+            res.json(transaction);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
 };
 module.exports = transactionController;
