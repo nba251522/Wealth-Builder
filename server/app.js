@@ -1,17 +1,37 @@
-require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
+const { graphqlHTTP } = require('express-graphql');
+const mongoose = require('mongoose');
+
+// Importing configurations
+const dbConfig = require('./config/dbConfig'); 
+const schema = require('./graphql/schema');
+const resolvers = require('./graphql/resolvers');
+
+// Importing middleware
+const authMiddleware = require('./middleware/authMiddleware'); 
+const errorMiddleware = require('./middleware/errorMiddleware');
+
 const app = express();
 
-app.use(cors());
-app.use(express.json()); 
+// Connect to MongoDB
+mongoose.connect(dbConfig.mongoURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+// Body parser middleware to handle JSON data
+app.use(express.json());
 
-const mongoose = require('mongoose');
-mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log(err));
+// GraphQL endpoint
+app.use('/graphql', 
+    authMiddleware, 
+    graphqlHTTP({
+        schema: schema,
+        rootValue: resolvers,
+        graphiql: true, 
+    })
+);
+
+app.use(errorMiddleware); 
+
+const PORT = process.env.PORT || 4000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
