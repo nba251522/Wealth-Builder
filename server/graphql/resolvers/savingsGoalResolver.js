@@ -1,69 +1,74 @@
 const SavingsGoal = require('../../models/SavingsGoal');
 
-const savingsGoalController = {
-    async createSavingsGoal(req, res) {
-        try {
-            const { title, amount, targetDate } = req.body;
-
-            const newSavingsGoal = new SavingsGoal({
-                user: req.user.id, 
-                title,
-                amount,
-                targetDate
-            });
-
-            const savedSavingsGoal = await newSavingsGoal.save();
-            res.status(201).json(savedSavingsGoal);
-        } catch (error) {
-            res.status(400).json({ message: error.message });
-        }
-    },
-    // Get all transactions
-    async getSavingsGoals(req, res) {
-        try {
-            const savingsGoals = await SavingsGoal.find({ user: req.user.id });
-            res.json(savingsGoals);
-        } catch (error) {
-            res.status(500).json({ message: error.message });
-        }
-    },
-    // Fetch a single transaction
-    async getSavingsGoal(req, res) {
-        try {
-            const savingsGoal = await SavingsGoal.findById(req.params.id);
-            res.json(savingsGoal);
-        } catch (error) {
-            res.status(500).json({ message: error.message });
-        }
-    },
-    async updateSavingsGoal(req, res) {
-        try {
-            const updatedSavingsGoal = await SavingsGoal.findByIdAndUpdate(
-                req.params.id,
-                req.body,
-                { new: true }
-            );
-            if (!updatedSavingsGoal) {
-                return res.status(404).json({ message: 'Savings goal not found' });
+const savingsGoalResolvers = {
+    Query: {
+        // Get all savings goals for a user
+        getSavingsGoals: async (_, args, context) => {
+            try {
+                const savingsGoals = await SavingsGoal.find({ user: context.user.id });
+                return savingsGoals;
+            } catch (error) {
+                throw new Error(error.message);
             }
-            res.json(updatedSavingsGoal);
-        } catch (error) {
-            res.status(400).json({ message: error.message });
-        }
-    },
-    async deleteSavingsGoal(req, res) {
-        try {
-            const savingsGoal = await SavingsGoal.findById(req.params.id);
-            if (!savingsGoal) {
-                return res.status(404).json({ message: 'Savings goal not found' });
+        },
+        // Fetch a single savings goal
+        getSavingsGoal: async (_, { id }, context) => {
+            try {
+                const savingsGoal = await SavingsGoal.findById(id);
+                if (!savingsGoal) {
+                    throw new Error('Savings goal not found');
+                }
+                return savingsGoal;
+            } catch (error) {
+                throw new Error(error.message);
             }
-            await savingsGoal.remove();
-            res.json({ message: 'Savings goal deleted successfully' });
-        } catch (error) {
-            res.status(500).json({ message: error.message });
-        }
+        },
+    },
+    Mutation: {
+        // Create a new savings goal
+        createSavingsGoal: async (_, { title, amount, targetDate }, context) => {
+            try {
+                const newSavingsGoal = new SavingsGoal({
+                    user: context.user.id,
+                    title,
+                    amount,
+                    targetDate
+                });
+                return await newSavingsGoal.save();
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
+        // Update a savings goal
+        updateSavingsGoal: async (_, { id, updateData }, context) => {
+            try {
+                const updatedSavingsGoal = await SavingsGoal.findByIdAndUpdate(
+                    id,
+                    updateData,
+                    { new: true }
+                );
+                if (!updatedSavingsGoal) {
+                    throw new Error('Savings goal not found');
+                }
+                return updatedSavingsGoal;
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
+        // Delete a savings goal
+        deleteSavingsGoal: async (_, { id }, context) => {
+            try {
+                const savingsGoal = await SavingsGoal.findById(id);
+                if (!savingsGoal) {
+                    throw new Error('Savings goal not found');
+                }
+                await savingsGoal.remove();
+                return { message: 'Savings goal deleted successfully' };
+            } catch (error) {
+                throw new Error(error.message);
+            }
+        },
     },
 };
 
-
-module.exports = savingsGoalController;
+module.exports = savingsGoalResolvers;
