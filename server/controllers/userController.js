@@ -92,6 +92,7 @@ const userController = {
             res.status(500).json({ message: error.message });
         }
     },
-
+// will try to implement a forget password feature that send you a password reset email in the future (will utilize nodemailer)
+// will try to implement a reset password feature in the future
 };
 module.exports = userController;
