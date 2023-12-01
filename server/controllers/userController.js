@@ -27,9 +27,8 @@ const userController = {
             res.status(500).json({ message: error.message });
         }
     },
-
     // Login an existing user
-     async login(req, res) {
+    async login(req, res) {
         try {
             const user = await User.findOne({ email: req.body.email });
             if (!user) {
@@ -49,9 +48,18 @@ const userController = {
         }
     },
     // Update a user's profile whenever new data is added via other controllers/routes
-   async updateProfile(req, res) {
+    async updateProfile(req, res) {
         try {
             const user = await User.findByIdAndUpdate(req.user.id, { $set: req.body }, { new: true });
+            res.json(user);
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
+    // Fetching the user's profile data when logged in
+    async getUserProfile(req, res) {
+        try {
+            const user = await User.findById(req.user.id).select('-password');
             res.json(user);
         } catch (error) {
             res.status(500).json({ message: error.message });
