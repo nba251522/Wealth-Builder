@@ -51,7 +51,18 @@ const savingsGoalController = {
             res.status(400).json({ message: error.message });
         }
     },
-
+    async deleteSavingsGoal(req, res) {
+        try {
+            const savingsGoal = await SavingsGoal.findById(req.params.id);
+            if (!savingsGoal) {
+                return res.status(404).json({ message: 'Savings goal not found' });
+            }
+            await savingsGoal.remove();
+            res.json({ message: 'Savings goal deleted successfully' });
+        } catch (error) {
+            res.status(500).json({ message: error.message });
+        }
+    },
 };
 
 
