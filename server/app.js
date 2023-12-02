@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 
 // Importing configurations
 const dbConfig = require('./config/dbConfig'); 
-const schema = require('./graphql/schema');
-const resolvers = require('./graphql/resolvers');
+const schema = require('./Schema/typeDefs');
+const resolvers = require('./Schema/resolvers');
 
 // Importing middleware
 const authMiddleware = require('./middleware/authMiddleware'); 
