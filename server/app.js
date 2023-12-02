@@ -24,12 +24,19 @@ const server = new ApolloServer({
     context: ({ req }) => ({ req })
 });
 
-// Apply the Apollo GraphQL middleware and set the path to /graphql
-server.applyMiddleware({ app, path: '/graphql' });
+async function startServer() {
+    // Start the Apollo Server
+    await server.start();
 
-// Use other middleware
-app.use(authMiddleware);
-app.use(errorMiddleware); 
+    // Apply the Apollo GraphQL middleware and set the path to /graphql
+    server.applyMiddleware({ app, path: '/graphql' });
 
-const PORT = process.env.PORT || 4000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    // Use other middleware
+    app.use(authMiddleware);
+    app.use(errorMiddleware); 
+
+    const PORT = process.env.PORT || 4000;
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}
+
+startServer();
