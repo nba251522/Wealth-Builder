@@ -1,6 +1,8 @@
 const express = require('express');
 const { graphqlHTTP } = require('express-graphql');
 const mongoose = require('mongoose');
+const resolvers = require('./Schema/resolvers');
+const schema = require('./Schema/typeDefs');
 
 // Importing configurations
 const dbConfig = require('./config/dbConfig'); 
