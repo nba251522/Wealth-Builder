@@ -1,11 +1,12 @@
 const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
+const { ApolloServer } = require('apollo-server-express');
 const mongoose = require('mongoose');
-const dbConfig = require('./config/dbConfig'); 
-const schema = require('./Schema/typeDefs');
+const dbConfig = require('./config/dbConfig');
+const typeDefs = require('./Schema/typeDefs');
 const resolvers = require('./Schema/resolvers');
 const authMiddleware = require('./middleware/authMiddleware'); 
 const errorMiddleware = require('./middleware/errorMiddleware');
+
 const app = express();
 
 // Connect to MongoDB
@@ -15,9 +16,6 @@ mongoose.connect(dbConfig.mongoURI, { useNewUrlParser: true, useUnifiedTopology:
 
 // Body parser middleware to handle JSON data
 app.use(express.json());
-
-// GraphQL schema and resolvers 
-const schema = makeExecutableSchema({ typeDefs, resolvers });
 
 // GraphQL endpoint
 app.use('/graphql', 

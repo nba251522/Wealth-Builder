@@ -1,8 +1,8 @@
-const userResolver = require('./userResolver');
-const budgetResolver = require('./budgetResolver');
-const notificationResolver = require('./notificationResolver');
-const transactionResolver = require('./transactionResolver');
-const savingsResolver = require('./savingsResolver');
+const userResolver = require('./resolvers/userResolver');
+const budgetResolver = require('./resolvers/budgetResolver');
+const notificationResolver = require('./resolvers/notificationResolver');
+const transactionResolver = require('./resolvers/transactionResolver');
+const savingsGoalResolver = require('./resolvers/savingsGoalResolver');
 
 const resolvers = {
     Query: {
@@ -10,14 +10,14 @@ const resolvers = {
         ...budgetResolver.Query,
         ...notificationResolver.Query,
         ...transactionResolver.Query,
-        ...savingsResolver.Query
+        ...savingsGoalResolver.Query
     },
     Mutation: {
         ...userResolver.Mutation,
         ...budgetResolver.Mutation,
         ...notificationResolver.Mutation,
         ...transactionResolver.Mutation,
-        ...savingsResolver.Mutation
+        ...savingsGoalResolver.Mutation
     }
 };
 
