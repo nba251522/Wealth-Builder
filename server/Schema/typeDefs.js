@@ -16,6 +16,10 @@ const typeDefs = gql`
         # Notification queries
         getNotifications: [Notification]
         getNotification(id: ID!): Notification
+
+        # SavingsGoal queries
+        getSavingsGoals: [SavingsGoal]
+        getSavingsGoal(id: ID!): SavingsGoal
     }
 
     type Mutation {
@@ -40,6 +44,11 @@ const typeDefs = gql`
         createNotification(notificationData: NotificationInput): Notification
         updateNotification(id: ID!, updateData: NotificationInput): Notification
         deleteNotification(id: ID!): MessageResponse
+
+        #SavingGoal mutations
+        createSavingsGoal(savingsGoalData: SavingsGoalInput): SavingsGoal
+        updateSavingsGoal(id: ID!, updateData: SavingsGoalInput): SavingsGoal
+        deleteSavingsGoal(id: ID!): MessageResponse
     }
 
     type User {
@@ -67,6 +76,13 @@ const typeDefs = gql`
         id: ID!
         message: String!
         date: String!
+    }
+
+    type SavingsGoal {
+        id: ID!
+        title: String!
+        amount: Float!
+        targetDate: String!
     }
 
     type AuthPayload {
@@ -98,6 +114,12 @@ const typeDefs = gql`
     input NotificationInput {
         message: String!
         date: String!
+    }
+
+    input SavingsGoalInput {
+        title: String!
+        amount: Float!
+        targetDate: String!
     }
 `;
 
