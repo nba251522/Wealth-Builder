@@ -3,343 +3,327 @@ const cleanDB = require("./cleanDB");
 
 const { User } = require("../models");
 const { Transaction } = require("../models");
+const { Budget } = require("../models");
+const { Notification } = require("../models");
+const { SavingsGoal } = require("../models");
 
 db.once("open", async () => {
   await cleanDB("User", "users");
 
-  const users = await Users.insertMany([
+  const users = await User.insertMany([
     {
       ID: 1,
       username: "John Doe",
       email: "john@gmail.com",
       password: "password123",
-      createdAt: "2021-03-01",
+      createdAt: "2021-03-01"
     },
     {
       ID: 2,
       username: "Jane Doe",
       email: "jane@gmail.com",
       password: "password123",
-      createdAt: "2021-03-02",
+      createdAt: "2021-03-02"
     },
     {
       ID: 3,
       username: "Bob Smith",
       email: "bob@gmail.com",
       password: "password123",
-      createdAt: "2021-03-03",
+      createdAt: "2021-03-03"
     },
     {
       ID: 4,
       username: "Sally Smith",
       email: "sally@gmail.com",
       password: "password123",
-      createdAt: "2021-03-04",
+      createdAt: "2021-03-04"
     },
     {
       ID: 5,
       username: "Joe Johnson",
       email: "joe@gmail.com",
       password: "password123",
-      createdAt: "2021-03-05",
-    },
+      createdAt: "2021-03-05"
+    }
   ]);
 
-  const transactions = [
+    console.log("users seeded");
+
+  const transactions = await Transaction.insertMany([
     {
       ID: 1,
       amount: 100.0,
+      date: "2021-03-01",
       type: "buy",
       category: "stocks",
-      description: "Apple Inc.",
-      date: "2021-03-01",
+      description: "Apple Inc."
     },
     {
       ID: 2,
       amount: 200.0,
+      date: "2021-03-02",
       type: "buy",
       category: "stocks",
-      description: "Microsoft Corporation",
-      date: "2021-03-02",
+      description: "Microsoft Corporation"
     },
     {
       ID: 3,
       amount: 300.0,
+      date: "2021-03-03",
       type: "buy",
       category: "stocks",
-      description: "Amazon.com, Inc.",
-      date: "2021-03-03",
+      description: "Amazon.com, Inc."
     },
     {
       ID: 4,
       amount: 400.0,
+      date: "2021-03-04",
       type: "buy",
       category: "stocks",
-      description: "Facebook, Inc.",
-      date: "2021-03-04",
+      description: "Facebook, Inc."
     },
     {
       ID: 5,
       amount: 500.0,
+      date: "2021-03-05",
       type: "buy",
       category: "stocks",
-      description: "Alphabet Inc.",
-      date: "2021-03-05",
+      description: "Alphabet Inc."
     },
     {
       ID: 6,
       amount: 600.0,
+      date: "2021-03-06",
       type: "buy",
       category: "stocks",
-      description: "Alphabet Inc.",
-      date: "2021-03-06",
+      description: "Alphabet Inc."
     },
     {
       ID: 7,
       amount: 700.0,
+      date: "2021-03-07",
       type: "buy",
       category: "stocks",
-      description: "Tesla, Inc.",
-      date: "2021-03-07",
+      description: "Tesla, Inc."
     },
     {
       ID: 8,
       amount: 800.0,
+      date: "2021-03-08",
       type: "buy",
       category: "stocks",
-      description: "NVIDIA Corporation",
-      date: "2021-03-08",
+      description: "NVIDIA Corporation"
     },
     {
       ID: 9,
       amount: 900.0,
+      date: "2021-03-09",
       type: "buy",
       category: "stocks",
-      description: "PayPal Holdings, Inc.",
-      date: "2021-03-09",
+      description: "PayPal Holdings, Inc."
     },
     {
       ID: 10,
       amount: 1000.0,
+      date: "2021-03-10",
       type: "buy",
       category: "stocks",
-      description: "Intel Corporation",
-      date: "2021-03-10",
-    },
-  ];
+      description: "Intel Corporation"  
+    }
+  ]);
+
   console.log("transactions seeded");
 
-  process.exit();
-});
+    const budgets = await Budget.insertMany([
+        {
+            ID: 1,
+            user: 1,
+            limit: 1000,
+            period: "Monthly",
+            category: "stocks",
+            createdAt: "2021-03-01",
+            startDate: "2021-03-01",
+            endDate: "2021-03-31",
+            recurring: false,
+            notificationThreshold: 80,
+            status: "Active",
+            updatedAt: "2021-03-01"
+        },
+        {
+            ID: 2,
+            user: 2,
+            limit: 1000,
+            period: "Monthly",
+            category: "stocks",
+            createdAt: "2021-03-01",
+            startDate: "2021-03-01",
+            endDate: "2021-03-31",
+            recurring: false,
+            notificationThreshold: 80,
+            status: "Active",
+            updatedAt: "2021-03-01"
+        },
+        {
+            ID: 3,
+            user: 3,
+            limit: 1000,
+            period: "Monthly",
+            category: "stocks",
+            createdAt: "2021-03-01",
+            startDate: "2021-03-01",
+            endDate: "2021-03-31",
+            recurring: false,
+            notificationThreshold: 80,
+            status: "Active",
+            updatedAt: "2021-03-01"
+        },
+        {
+            ID: 4,
+            user: 4,
+            limit: 1000,
+            period: "Monthly",
+            category: "stocks",
+            createdAt: "2021-03-01",
+            startDate: "2021-03-01",
+            endDate: "2021-03-31",
+            recurring: false,
+            notificationThreshold: 80,
+            status: "Active",
+            updatedAt: "2021-03-01"
+        },
+        {
+            ID: 5,
+            user: 5,
+            limit: 1000,
+            period: "Monthly",
+            category: "stocks",
+            createdAt: "2021-03-01",
+            startDate: "2021-03-01",
+            endDate: "2021-03-31",
+            recurring: false,
+            notificationThreshold: 80,
+            status: "Active",
+            updatedAt: "2021-03-01"
+        }
+    ]);
 
-const portfolios = [
-  {
-    name: "John Doe Portfolio",
-    userId: 1,
-  },
-  {
-    name: "Jane Doe Portfolio",
-    userId: 2,
-  },
-  {
-    name: "Bob Smith Portfolio",
-    userId: 3,
-  },
-  {
-    name: "Sally Smith Portfolio",
-    userId: 4,
-  },
-  {
-    name: "Joe Johnson Portfolio",
-    userId: 5,
-  },
-  {
-    name: "Jill Johnson Portfolio",
-    userId: 6,
-  },
-  {
-    name: "Bill Williams Portfolio",
-    userId: 7,
-  },
-  {
-    name: "Betty Williams Portfolio",
-    userId: 8,
-  },
-  {
-    name: "Jack Jones Portfolio",
-    userId: 9,
-  },
-  {
-    name: "Jill Jones Portfolio",
-    userId: 10,
-  },
-];
+    console.log("budgets seeded");
 
-const stocks = [
-  {
-    symbol: "AAPL",
-    name: "Apple Inc.",
-    exchange: "NASDAQ",
-    userId: 1,
-  },
-  {
-    symbol: "MSFT",
-    name: "Microsoft Corporation",
-    exchange: "NASDAQ",
-    userId: 2,
-  },
-  {
-    symbol: "AMZN",
-    name: "Amazon.com, Inc.",
-    exchange: "NASDAQ",
-    userId: 3,
-  },
-  {
-    symbol: "FB",
-    name: "Facebook, Inc.",
-    exchange: "NASDAQ",
-    userId: 4,
-  },
-  {
-    symbol: "GOOG",
-    name: "Alphabet Inc.",
-    exchange: "NASDAQ",
-    userId: 5,
-  },
-  {
-    symbol: "GOOGL",
-    name: "Alphabet Inc.",
-    exchange: "NASDAQ",
-    userId: 6,
-  },
-  {
-    symbol: "TSLA",
-    name: "Tesla, Inc.",
-    exchange: "NASDAQ",
-    userId: 7,
-  },
-  {
-    symbol: "NVDA",
-    name: "NVIDIA Corporation",
-    exchange: "NASDAQ",
-    userId: 8,
-  },
-  {
-    symbol: "PYPL",
-    name: "PayPal Holdings, Inc.",
-    exchange: "NASDAQ",
-    userId: 9,
-  },
-  {
-    symbol: "INTC",
-    name: "Intel Corporation",
-    exchange: "NASDAQ",
-    userId: 10,
-  },
-];
+    const notifications = await Notification.insertMany([
+        {
+            ID: 1,
+            user: 1,
+            message: "You have exceeded your budget limit for stocks.",
+            createdAt: "2021-03-01"
+        },
+        {
+            ID: 2,
+            user: 2,
+            message: "You have exceeded your budget limit for stocks.",
+            createdAt: "2021-03-01"
+        },
+        {
+            ID: 3,
+            user: 3,
+            message: "You have exceeded your budget limit for stocks.",
+            createdAt: "2021-03-01"
+        },
+        {
+            ID: 4,
+            user: 4,
+            message: "You have exceeded your budget limit for stocks.",
+            createdAt: "2021-03-01"
+        },
+        {
+            ID: 5,
+            user: 5,
+            message: "You have exceeded your budget limit for stocks.",
+            createdAt: "2021-03-01"
+        }
+    ]);
 
-const transactions = [
-  {
-    symbol: "AAPL",
-    name: "Apple Inc.",
-    exchange: "NASDAQ",
-    userId: 1,
-    portfolioId: 1,
-    price: 100.0,
-    quantity: 10,
-    transactionType: "buy",
-  },
-  {
-    symbol: "MSFT",
-    name: "Microsoft Corporation",
-    exchange: "NASDAQ",
-    userId: 2,
-    portfolioId: 2,
-    price: 200.0,
-    quantity: 20,
-    transactionType: "buy",
-  },
-  {
-    symbol: "AMZN",
-    name: "Amazon.com, Inc.",
-    exchange: "NASDAQ",
-    userId: 3,
-    portfolioId: 3,
-    price: 300.0,
-    quantity: 30,
-    transactionType: "buy",
-  },
-  {
-    symbol: "FB",
-    name: "Facebook, Inc.",
-    exchange: "NASDAQ",
-    userId: 4,
-    portfolioId: 4,
-    price: 400.0,
-    quantity: 40,
-    transactionType: "buy",
-  },
-  {
-    symbol: "GOOG",
-    name: "Alphabet Inc.",
-    exchange: "NASDAQ",
-    userId: 5,
-    portfolioId: 5,
-    price: 500.0,
-    quantity: 50,
-    transactionType: "buy",
-  },
-  {
-    symbol: "GOOGL",
-    name: "Alphabet Inc.",
-    exchange: "NASDAQ",
-    userId: 6,
-    portfolioId: 6,
-    price: 600.0,
-    quantity: 60,
-    transactionType: "buy",
-  },
-  {
-    symbol: "TSLA",
-    name: "Tesla, Inc.",
-    exchange: "NASDAQ",
-    userId: 7,
-    portfolioId: 7,
-    price: 700.0,
-    quantity: 70,
-    transactionType: "buy",
-  },
-  {
-    symbol: "NVDA",
-    name: "NVIDIA Corporation",
-    exchange: "NASDAQ",
-    userId: 8,
-    portfolioId: 8,
-    price: 800.0,
-    quantity: 80,
-    transactionType: "buy",
-  },
-  {
-    symbol: "PYPL",
-    name: "PayPal Holdings, Inc.",
-    exchange: "NASDAQ",
-    userId: 9,
-    portfolioId: 9,
-    price: 900.0,
-    quantity: 90,
-    transactionType: "buy",
-  },
-  {
-    symbol: "INTC",
-    name: "Intel Corporation",
-    exchange: "NASDAQ",
-    userId: 10,
-    portfolioId: 10,
-    price: 1000.0,
-    quantity: 100,
-    transactionType: "buy",
-  },
-];
+    console.log("notifications seeded");
+
+    const savingsGoals = await SavingsGoal.insertMany([
+        {
+            ID: 1,
+            user: 1,
+            goalName: "New Car",
+            goalAmount: 10000,
+            currentAmount: 0,
+            targetDate: "2021-12-31",
+            createdAt: "2021-03-01",
+            updatedAt: "2021-03-01"
+        },
+        {
+            ID: 2,
+            user: 2,
+            goalName: "New Car",
+            goalAmount: 10000,
+            currentAmount: 0,
+            targetDate: "2021-12-31",
+            createdAt: "2021-03-01",
+            updatedAt: "2021-03-01"
+        },
+        {
+            ID: 3,
+            user: 3,
+            goalName: "New Car",
+            goalAmount: 10000,
+            currentAmount: 0,
+            targetDate: "2021-12-31",
+            createdAt: "2021-03-01",
+            updatedAt: "2021-03-01"
+        },
+        {
+            ID: 4,
+            user: 4,
+            goalName: "New Car",
+            goalAmount: 10000,
+            currentAmount: 0,
+            targetDate: "2021-12-31",
+            createdAt: "2021-03-01",
+            updatedAt: "2021-03-01"
+        },
+        {
+            ID: 5,
+            user: 5,
+            goalName: "New Car",
+            goalAmount: 10000,
+            currentAmount: 0,
+            targetDate: "2021-12-31",
+            createdAt: "2021-03-01",
+            updatedAt: "2021-03-01"
+        }
+    ]);
+
+    console.log("savings goals seeded");
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 const seed = async () => {
   try {
