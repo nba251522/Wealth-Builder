@@ -1,30 +1,29 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></hr></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"></input>
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-        </div>
-    </div>
-</nav>
+import React from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap'; 
+
+const MyNavbar = () => {
+  return (
+    <Navbar bg="body-tertiary" expand="lg">
+      <Navbar.Brand href="#">Navbar</Navbar.Brand>
+      <Navbar.Toggle aria-controls="navbarSupportedContent" />
+      <Navbar.Collapse id="navbarSupportedContent">
+        <Nav className="me-auto">
+          <Nav.Link href="#" active>Home</Nav.Link>
+          <NavDropdown title="Dropdown" id="basic-nav-dropdown">
+            <NavDropdown.Item href="#">Action</NavDropdown.Item>
+            <NavDropdown.Item href="#">Another action</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item href="#">Something else here</NavDropdown.Item>
+          </NavDropdown>
+        </Nav>
+        <Form className="d-flex">
+          <FormControl type="search" placeholder="Search" aria-label="Search" />
+          <Button variant="outline-success" type="submit">Search</Button>
+        </Form>
+      </Navbar.Collapse>
+    </Navbar>
+  );
+};
+
+export default MyNavbar;
