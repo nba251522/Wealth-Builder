@@ -24,6 +24,7 @@
     "happy-dom": "^9.20.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-bootstrap": "^2.9.1",
     "vitest": "^0.32.0"
   },
   "devDependencies": {

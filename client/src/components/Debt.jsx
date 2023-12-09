@@ -1,5 +1,4 @@
 
-import React, { useState } from 'react';
 import { Table, Button, Form, Row, Col, Container } from 'react-bootstrap';
 
 const Debit = () => {
