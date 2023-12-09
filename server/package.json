@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "start": "node app.js"
+    "start": "node app.js",
+    "seed": "node config/seeds.js"
   },
   "keywords": [],
   "author": "",
