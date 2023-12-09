@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
+    "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "server": "cd server && npm start",
     "client": "cd client && npm start",
     "seed": "cd server && npm run seed",
