@@ -10,6 +10,6 @@ export default defineConfig({
   // configure test environment for vite application
   test: {
     globals: true,
-    environment: 'happy-dom'
+    environment: 'happy-dom' // A "browser-like" environment for testing
   }
 })
