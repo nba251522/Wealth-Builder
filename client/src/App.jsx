@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import { Header, Footer, Budget, Debt, Expense, Savings, Income } from "./components/index";
+import { Header, Footer, Budget } from "./components/index";
 
 export default function App() {
   // Create state for app components
   const [budget, setBudget] = useState(false);
-  const [savings, setSavings] = useState(false);
-  const [debt, setDebt] = useState(false);
-  const [expense, setExpense] = useState(false);
-  const [income, setIncome] = useState(false);
 
   function handleSelect(event, type) {
     event.preventDefault();
@@ -15,53 +11,16 @@ export default function App() {
       case "budget":
         setBudget(!budget); // Toggle state of budget
         break;
-      case "savings":
-        setSavings(!savings); // Toggle state of savings
-        break;
-      case "debt":
-        setDebt(!debt); // Toggle state of debt
-        break;
-      case "expense":
-        setExpense(!expense); // Toggle state of expense
-        break;
-      case "income":
-        setIncome(!income); // Toggle state of income
-        break;
       default:
         break;
     }
   }
 
   function Budget() {
-    if (budget) {
-      return <div>budget</div>; // return budget component when made avaible 
-    }
+    // return budget component
+    if (budget) return ( <Budget /> );  
   }
-
-  function Savings() {
-    if (savings) {
-      return <div>savings</div>; // return savings component when made avaible
-    }
-  }
-
-  function Debt() {
-    if (debt) {
-      return <div>debt</div>; // return debt component when made avaible
-    }
-  } 
-
-  function Expense() { 
-    if (expense) {
-      return <div>expense</div>; // return expense component when made avaible
-    }
-  }
-
-  function Income() {
-    if (income) {
-      return <div>income</div>; // return income component when made avaible
-    }
-  }
-
+  
   return (
     <div className="page-content">
       <Header />
@@ -119,10 +78,6 @@ export default function App() {
           </ul>
       </div>
       { Budget() }
-      { Savings() }
-      { Debt() }
-      { Expense() }
-      { Income() }
       <Footer />
     </div>
   );
