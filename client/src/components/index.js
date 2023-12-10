@@ -1,18 +1,19 @@
 import Budget from './budget';
 import Header from './header';
 import Footer from './footer';
-import Debit from './debt';
-import Savings from './savings';
-import Income from './income';
-import Expense from './expense';
-
+Import Debit from './budegtinfo/debit.js';
+Import Expense from './budegtinfo/expense.js';
+Import Income from './budegtinfo/income.js';
+Import Savings from './budegtinfo/savings.js';
+Import SavingsGoal from './budegtinfo/savingsGoal.js';
 
 export {
     Budget,
     Header,
     Footer,
     Debit,
-    Savings,
-    Income,
     Expense,
-};
+    Income,
+    Savings,
+    SavingsGoal,
+   };

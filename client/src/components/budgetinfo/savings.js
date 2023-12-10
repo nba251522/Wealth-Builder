@@ -75,4 +75,35 @@ const Savings = () => {
                     type="number"
                     placeholder="Enter amount"
                     value={newItemAmount}
+                    onChange={(e) => setNewItemAmount(e.target.value)}
+                    />
+                  </Form.Group>
+                  <Button variant="primary" type="submit" onClick={handleAddSavings}>
+                    Add Savings
+                  </Button>
+                </Form>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <Card>
+              <Card.Body>
+                <h4>Total Savings: ${totalSavings.toFixed(2)}</h4>
+                {totalSavings >= savingsGoal ? (
+                  <p>Congratulations! You've reached your savings goal.</p>
+                ) : (
+                  <p>Keep saving to reach your goal of ${savingsGoal}.</p>
+                )}
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    );
+  };
+  
+  export default Savings;
+  
                  
