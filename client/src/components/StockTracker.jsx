@@ -12,4 +12,12 @@ const StockApp = () => {
     const handleSymbolChange = (text) => {
         setSymbol(text.toUpperCase());
     };
+
+    const handleRefreshPress = async () => {
+        setLoading(true);
+
+        try {
+            
+        }
+    }
 }
