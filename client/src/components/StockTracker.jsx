@@ -17,7 +17,13 @@ const StockApp = () => {
         setLoading(true);
 
         try {
-          const responsePrice = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`)  
+          const responsePrice = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`);
+          const dataPrice = await responsePrice.json();
+          
+          if (dataPrice['Global Quote']) {
+            const newPrice = parseFloat(dataPrice['Global Quote']['05. price']).toFixed(2);
+            setPrice(newPrice);
+          }
         }
     }
 }
