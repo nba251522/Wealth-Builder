@@ -1,11 +1,12 @@
 import { useState } from 'react';
+import './index.css';
 
 export default function App() {
   // Create state for budget component
   const [budget, setBudget] = useState(false);
 
   function handleSelect(event, type) {
-    event.preventDefault();
+    // event.preventDefault();
     switch(type) {
       case "budget":
         setBudget(!budget); // Toggle state of checkbox
