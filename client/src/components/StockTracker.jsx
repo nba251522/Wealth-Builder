@@ -8,4 +8,8 @@ const StockApp = () => {
     const [price, setPrice] = useState(null);
     const [loading, setLoading] = useState(false);
     const [news, setNews] = useState([]);
+
+    const handleSymbolChange = (text) => {
+        setSymbol(text.toUpperCase());
+    };
 }
