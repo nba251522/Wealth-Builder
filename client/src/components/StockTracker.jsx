@@ -58,5 +58,12 @@ const StockApp = () => {
                     <TextInput style={{ marginLeft: 10, marginRight: 10, fontSize: 18, borderWidth: 1, padding: 5, flex: 1 }} value={symbol} onChangeText={handleSymbolChange} />
                     <Button title="Refresh" onPress={handleRefreshPress} disabled={loading} />
                 </View>
+                {loading && <Text style={{ fontSize: 18, marginTop: 20 }}>Loading...</Text>}
+                {price && (
+                    <Text style={{ fontSize: 24, marginTop: 20 }}>
+                        {symbol}: ${price}
+                    </Text>
+                )}
+                {!price && !loading && <Text style={{ fontSize: 18, marginTop: 20 }}>No data available for {symbol}</Text>}
     )
 }
