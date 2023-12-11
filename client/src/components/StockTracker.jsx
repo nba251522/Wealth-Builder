@@ -78,3 +78,5 @@ const StockApp = () => {
             </View>
     );
 };
+
+export default StockApp;
