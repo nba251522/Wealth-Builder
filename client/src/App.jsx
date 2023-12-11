@@ -1,49 +1,42 @@
 import { useState } from 'react';
+import { Dropdown, Form } from 'react-bootstrap';
 import { Budget, Header, Footer } from './components';
 import './index.css';
 
 export default function App() {
   // Create state for budget component
-  const [budget, setBudget] = useState(false);
+  const [budgetState, setBudget] = useState(false);
 
   function handleSelect(event, type) {
-    // event.preventDefault();
+    event.preventDefault();
     switch(type) {
       case "budget":
-        setBudget(!budget); // Toggle state of checkbox
+        setBudget(!budgetState); // Toggle state of checkbox
         break;
       default:
         break;
     }
   }
 
-  function Budget() {
-    if (budget) {
-      return <div><Budget /></div>; // return budget component when made avaible 
-    }
-  }
-
   return (
     <div className="page-content">
       <Header />
-      <div className="dropdown">
-          <button className="btn btn-primary dropdown-toggle" type="button" id="featureButton"
-          data-mdb-toggle="dropdown" aria-expanded="false">
-            Select a tracker!
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="featureButton">
-              <li>
-                  <a className="dropdown-item">
-                      <div className="form-check">
-                          <input className="form-check-input" type="checkbox" id="budget"
-                          onChange={handleSelect("budget")}/>
-                          <label className="form-check-label" for="budget">Budget</label>
-                      </div>
-                  </a>
-              </li>
-          </ul>
-      </div>
-      { Budget() }
+      <Dropdown>
+        <Dropdown.Toggle variant="primary" id="featureButton">
+          Select a tracker!
+        </Dropdown.Toggle>
+        <Dropdown.Menu>
+          <Dropdown.Item>
+            <Form.Check
+              type="checkbox"
+              id="budget"
+              label="Budget"
+              onChange={(event) => handleSelect(event, 'budget')}
+            />
+          </Dropdown.Item>
+        </Dropdown.Menu>
+      </Dropdown>
+      { budgetState && <Budget /> } 
       <Footer />
     </div>
   );

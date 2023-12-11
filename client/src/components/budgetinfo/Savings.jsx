@@ -7,7 +7,7 @@ const Savings = () => {
   const [newItemAmount, setNewItemAmount] = useState('');
   const [newItemSource, setNewItemSource] = useState('');
   const [totalSavings, setTotalSavings] = useState(0);
-  const { savingsGoal } = useContext(SavingsGoal);
+  const savingsGoal = useContext(SavingsGoal);
 
   const handleAddSavings = (e) => {
     e.preventDefault();
