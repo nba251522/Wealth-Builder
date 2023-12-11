@@ -48,4 +48,10 @@ const StockApp = () => {
     useEffect(() => {
         handleRefreshPress();
     }, []);
+
+    return (
+        <View style={{ flex: 1 }}>
+            <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#F5F5F5', padding: 20 }}>
+                <Text style={{ fontSize: 24 }}>Stock Price Tracker</Text>
+    )
 }
