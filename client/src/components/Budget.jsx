@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form } from 'react-bootstrap';
-import Debit from './budgetinfo/debt';
-import Expense from './budgetinfo/expense';
-import Income from './budgetinfo/income';
-import Savings from './budgetinfo/savings';
+import Debit from './budgetinfo/Debt';
+import Expense from './budgetinfo/Expense';
+import Income from './budgetinfo/Income';
+import Savings from './budgetinfo/Savings';
 
 const Budget = () => {
     const [totalIncome, setTotalIncome] = useState(0);

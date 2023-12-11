@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Budget, Header, Footer } from './components';
 import './index.css';
 
 export default function App() {
@@ -18,12 +19,13 @@ export default function App() {
 
   function Budget() {
     if (budget) {
-      return <div>budget</div>; // return budget component when made avaible 
+      return <div><Budget /></div>; // return budget component when made avaible 
     }
   }
 
   return (
     <div className="page-content">
+      <Header />
       <div className="dropdown">
           <button className="btn btn-primary dropdown-toggle" type="button" id="featureButton"
           data-mdb-toggle="dropdown" aria-expanded="false">
@@ -42,6 +44,7 @@ export default function App() {
           </ul>
       </div>
       { Budget() }
+      <Footer />
     </div>
   );
 }
