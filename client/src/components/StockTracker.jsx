@@ -65,5 +65,15 @@ const StockApp = () => {
                     </Text>
                 )}
                 {!price && !loading && <Text style={{ fontSize: 18, marginTop: 20 }}>No data available for {symbol}</Text>}
+                </View>
+                <ScrollView style={{ flex: 1, marginTop: 20 }}>
+                    {news.map((article, index) => (
+                        <View key={index} style={{ backgroundColor: '#F5F5F5', padding: 10, margin: 10 }}>
+                            <Text style={{ fontSize: 18 }}>{article.title}</Text>
+                            <Text style={{ fontSize: 16 }}>{article.description}</Text>
+                            <Button title="Read more" onPress={() => Linking.openURL(article.url)} />
+                        </View>
+        ))}
+      </ScrollView>
     )
 }
