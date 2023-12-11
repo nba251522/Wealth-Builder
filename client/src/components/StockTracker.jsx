@@ -53,5 +53,10 @@ const StockApp = () => {
         <View style={{ flex: 1 }}>
             <View style={{ alignItems: 'center', justifyContent: 'center', backgroundColor: '#F5F5F5', padding: 20 }}>
                 <Text style={{ fontSize: 24 }}>Stock Price Tracker</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20 }}>
+                    <Text style={{ fontSize: 18 }}>Symbol:</Text>
+                    <TextInput style={{ marginLeft: 10, marginRight: 10, fontSize: 18, borderWidth: 1, padding: 5, flex: 1 }} value={symbol} onChangeText={handleSymbolChange} />
+                    <Button title="Refresh" onPress={handleRefreshPress} disabled={loading} />
+                </View>
     )
 }
