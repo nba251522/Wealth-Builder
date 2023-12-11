@@ -1,13 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
-import { SavingsGoalContext } from './savingsGoal';
+import SavingsGoal from './savingsGoal';
 
 const Savings = () => {
   const [savingsItems, setSavingsItems] = useState([]);
   const [newItemAmount, setNewItemAmount] = useState('');
   const [newItemSource, setNewItemSource] = useState('');
   const [totalSavings, setTotalSavings] = useState(0);
-  const { savingsGoal } = useContext(SavingsGoalContext);
+  const { savingsGoal } = useContext(SavingsGoal);
 
   const handleAddSavings = (e) => {
     e.preventDefault();
