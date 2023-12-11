@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import './index.css';
 
 export default function App() {
   // Create state for budget component
