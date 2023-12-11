@@ -73,7 +73,8 @@ const StockApp = () => {
                             <Text style={{ fontSize: 16 }}>{article.description}</Text>
                             <Button title="Read more" onPress={() => Linking.openURL(article.url)} />
                         </View>
-        ))}
-      </ScrollView>
-    )
-}
+                    ))}
+                </ScrollView>
+            </View>
+    );
+};
