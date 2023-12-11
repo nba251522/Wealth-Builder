@@ -31,6 +31,21 @@ const StockApp = () => {
         // stock news
         const responseNews = await fetch(`https://newsapi.org/v2/everything?q=${symbol}&apiKey=09fd426afd764db9988d00143f2ce062`);
         const dataNews = await responseNews.json();
+
+        if (dataNews.articles) {
+            setNews(dataNews.articles);
+        } else {
+            setNews([]);
         }
-    }
+        } catch (error) {
+            console.error(error);
+            setPrice(null);
+            setNews([]);
+        } finally {
+            setLoading(false);
+        }
+    };
+    useEffect(() => {
+        handleRefreshPress();
+    }, []);
 }
