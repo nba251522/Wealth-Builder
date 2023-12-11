@@ -62,8 +62,8 @@ const typeDefs = gql`
         amount: Float!
         type: String!
         category: String!
-        description: String
-        date: String!
+        // description: String
+        // date: String!
     }
 
     type Budget {

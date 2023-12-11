@@ -61,7 +61,7 @@ db.once("open", async () => {
       date: "2021-03-01",
       type: "Income",
       category: "Salary",
-      description: "Monthly salary deposit",
+      // description: "Monthly salary deposit",
     },
     {
       user: "user_id_2",
@@ -69,7 +69,7 @@ db.once("open", async () => {
       date: "2021-03-02",
       type: "Expense",
       category: "Groceries",
-      description: "Weekly grocery shopping",
+      // description: "Weekly grocery shopping",
     },
     {
       user: 3,
@@ -77,7 +77,7 @@ db.once("open", async () => {
       date: "2021-03-03",
       type: "Income",
       category: "stocks",
-      description: "Amazon.com, Inc.",
+      // description: "Amazon.com, Inc.",
     },
     {
       user: 4,
@@ -85,7 +85,7 @@ db.once("open", async () => {
       date: "2021-03-04",
       type: "Income",
       category: "stocks",
-      description: "Facebook, Inc.",
+      // description: "Facebook, Inc.",
     },
     {
       user: 5,
@@ -93,7 +93,7 @@ db.once("open", async () => {
       date: "2021-03-05",
       type: "Income",
       category: "stocks",
-      description: "Alphabet Inc.",
+      // description: "Alphabet Inc.",
     },
     {
       user: 1,
@@ -101,7 +101,7 @@ db.once("open", async () => {
       date: "2021-03-06",
       type: "Income",
       category: "stocks",
-      description: "Alphabet Inc.",
+      // description: "Alphabet Inc.",
     },
     {
       user: 2,
@@ -109,7 +109,7 @@ db.once("open", async () => {
       date: "2021-03-07",
       type: "Income",
       category: "stocks",
-      description: "Tesla, Inc.",
+      // description: "Tesla, Inc.",
     },
     {
       user: 3,
@@ -117,7 +117,7 @@ db.once("open", async () => {
       date: "2021-03-08",
       type: "Income",
       category: "stocks",
-      description: "NVIDIA Corporation",
+      // description: "NVIDIA Corporation",
     },
     {
       user: 4,
@@ -125,7 +125,7 @@ db.once("open", async () => {
       date: "2021-03-09",
       type: "Income",
       category: "stocks",
-      description: "PayPal Holdings, Inc.",
+      // description: "PayPal Holdings, Inc.",
     },
     {
       user: 5,
@@ -133,7 +133,7 @@ db.once("open", async () => {
       date: "2021-03-10",
       type: "Income",
       category: "stocks",
-      description: "Intel Corporation",
+      // description: "Intel Corporation",
     },
   ]);
 
