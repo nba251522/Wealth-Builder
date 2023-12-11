@@ -17,7 +17,7 @@ const StockApp = () => {
         setLoading(true);
 
         try {
-            
+          const responsePrice = await fetch(`https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${API_KEY}`)  
         }
     }
 }
