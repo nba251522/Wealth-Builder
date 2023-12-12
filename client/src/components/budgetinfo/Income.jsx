@@ -21,7 +21,7 @@ const Income = () => {
     <Container>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-secondary">
             <Card.Body>
               <h2>Income Log</h2>
               <Table striped bordered hover>
@@ -48,7 +48,7 @@ const Income = () => {
       </Row>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-secondary">
             <Card.Body>
               <Form>
                 <Form.Group controlId="formIncomeSource">
@@ -79,7 +79,7 @@ const Income = () => {
       </Row>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-success">
             <Card.Body>
               <h4>Total Income: ${totalIncome.toFixed(2)}</h4>
             </Card.Body>

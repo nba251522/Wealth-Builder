@@ -21,7 +21,7 @@ const SavingsGoal = () => {
     <Container>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-secondary">
             <Card.Body>
               <h2>Savings Log</h2>
               <Table striped bordered hover>
@@ -48,7 +48,7 @@ const SavingsGoal = () => {
       </Row>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-secondary">
             <Card.Body>
               <Form>
                 <Form.Group controlId="formSavingsSource">
@@ -79,7 +79,7 @@ const SavingsGoal = () => {
       </Row>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-success">
             <Card.Body>
               <h4>Goal Savings: ${totalSavings.toFixed(2)}</h4>
             </Card.Body>
