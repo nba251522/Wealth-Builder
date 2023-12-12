@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 import Logo from '../assets/WB.png'
 import '../styles/headfoot.css'
 
@@ -26,16 +26,9 @@ const MyNavbar = () => {
       <Navbar.Toggle aria-controls="navbarSupportedContent" />
       <Navbar.Collapse id="navbarSupportedContent">
         <Nav className="me-auto">
-        <Nav.Link href="/" active>Login</Nav.Link>
-          <Nav.Link href="/" active>Home</Nav.Link>
-          <Nav.Link href="/API" active>Stock Tracker</Nav.Link>
-          <Nav.Link href="/Budget" active>Budget</Nav.Link>
-          <NavDropdown title="Select Trackers" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/Expense">Expense</NavDropdown.Item>
-            <NavDropdown.Item href="/Income">Income</NavDropdown.Item>
-            <NavDropdown.Item href="/Savings">Savings</NavDropdown.Item>
-            <NavDropdown.Item href="/SavingsGoal">Savings Goals</NavDropdown.Item>
-          </NavDropdown>
+        <Nav.Link href="/" active>Budget</Nav.Link>
+          <Nav.Link href="/StockTracker" active>Stock Tracker</Nav.Link>
+          <Nav.Link href="/Login" active>Login</Nav.Link>
         </Nav>
         <Form onSubmit={handleSearchSubmit} className="ml-auto d-flex">
           <FormControl

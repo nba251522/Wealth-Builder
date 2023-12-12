@@ -20,9 +20,7 @@ const Budget = () => {
     const handleSavingsChange = (amount) => {
         setTotalSavings(amount);
     };
-    const handleDebitChange = (amount) => {
-        setTotalDebit(amount);
-    };
+
     return (
         <Container>
             <Row>
@@ -34,9 +32,6 @@ const Budget = () => {
                 </Col>
                 <Col>
                     <Savings onSavingsChange={handleSavingsChange} />
-                </Col>
-                <Col>
-                    <Debit onDebitChange={handleDebitChange} />
                 </Col>
             </Row>
             <Row className="mt-3">
@@ -55,10 +50,6 @@ const Budget = () => {
                             <Form.Group controlId="totalSavings">
                                 <Form.Label>Total Savings:</Form.Label>
                                 <Form.Control type="text" value={`$${totalSavings}`} readOnly />
-                            </Form.Group>
-                            <Form.Group controlId="totalDebit">
-                                <Form.Label>Total Debit:</Form.Label>
-                                <Form.Control type="text" value={`$${totalDebit}`} readOnly />
                             </Form.Group>
                         </Card.Body>
                     </Card>
