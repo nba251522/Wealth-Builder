@@ -21,7 +21,7 @@ const Expense = () => {
     <Container>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-secondary">
             <Card.Body>
               <h2>Expense Log</h2>
               <Table striped bordered hover>
@@ -48,7 +48,7 @@ const Expense = () => {
       </Row>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-secondary">
             <Card.Body>
               <Form>
                 <Form.Group controlId="formExpenseSource">
@@ -79,7 +79,7 @@ const Expense = () => {
       </Row>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-success">
             <Card.Body>
               <h4>Total Expense: ${totalExpense.toFixed(2)}</h4>
             </Card.Body>

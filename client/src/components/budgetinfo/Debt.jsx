@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
 
-const SavingsGoal = () => {
-  const [savingsItems, setSavingsItems] = useState([]);
+const Debit = () => {
+  const [debitItems, setDebitItems] = useState([]);
   const [newItemAmount, setNewItemAmount] = useState('');
   const [newItemSource, setNewItemSource] = useState('');
-  const [totalSavings, setTotalSavings] = useState(0);
+  const [totalDebit, setTotalDebit] = useState(0);
 
-  const handleAddSavings = () => {
+  const handleAddDebit = () => {
     if (newItemAmount.trim() !== '' && newItemSource.trim() !== '') {
       const amount = parseFloat(newItemAmount);
-      setSavingsItems([...savingsItems, { amount, source: newItemSource }]);
-      setTotalSavings(totalSavings + amount);
+      const newDebitItem = { id: Date.now(), amount, source: newItemSource };
+      setDebitItems([...debitItems, newDebitItem]);
+      setTotalDebit(totalDebit + amount);
       setNewItemAmount('');
       setNewItemSource('');
     }
@@ -21,19 +22,19 @@ const SavingsGoal = () => {
     <Container>
       <Row>
         <Col>
-          <Card className="bg-secondary">
+          <Card>
             <Card.Body>
-              <h2>Savings Log</h2>
+              <h2>Debit Log</h2>
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    <th>#</th>
-                    <th>Item</th>
-                    <th>Goal Amount</th>
+                    <th>Source</th>
+                    <th>From</th>
+                    <th>Amount</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {savingsItems.map((item, index) => (
+                  {debitItems.map((item, index) => (
                     <tr key={index}>
                       <td>{index + 1}</td>
                       <td>{item.source}</td>
@@ -48,11 +49,11 @@ const SavingsGoal = () => {
       </Row>
       <Row>
         <Col>
-          <Card className="bg-secondary">
+          <Card>
             <Card.Body>
               <Form>
-                <Form.Group controlId="formSavingsSource">
-                  <Form.Label>Enter What Savings is For:</Form.Label>
+                <Form.Group controlId="formDebitSource">
+                  <Form.Label>Enter Debit Source:</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Enter source"
@@ -60,8 +61,8 @@ const SavingsGoal = () => {
                     onChange={(e) => setNewItemSource(e.target.value)}
                   />
                 </Form.Group>
-                <Form.Group controlId="formSavingsAmount">
-                  <Form.Label>Enter Savings Goal Amount:</Form.Label>
+                <Form.Group controlId="formDebitAmount">
+                  <Form.Label>Enter Debit Amount:</Form.Label>
                   <Form.Control
                     type="number"
                     placeholder="Enter amount"
@@ -69,8 +70,8 @@ const SavingsGoal = () => {
                     onChange={(e) => setNewItemAmount(e.target.value)}
                   />
                 </Form.Group>
-                <Button variant="primary" onClick={handleAddSavings}>
-                  Goal Amount
+                <Button variant="primary" onClick={handleAddDebit}>
+                  Add Debit
                 </Button>
               </Form>
             </Card.Body>
@@ -79,9 +80,9 @@ const SavingsGoal = () => {
       </Row>
       <Row>
         <Col>
-          <Card className="bg-success">
+          <Card>
             <Card.Body>
-              <h4>Goal Savings: ${totalSavings.toFixed(2)}</h4>
+              <h4>Total Debit: ${totalDebit.toFixed(2)}</h4>
             </Card.Body>
           </Card>
         </Col>
@@ -90,4 +91,4 @@ const SavingsGoal = () => {
   );
 };
 
-export default SavingsGoal;
+export default Debit;
