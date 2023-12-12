@@ -6,7 +6,7 @@ import '../styles/headfoot.css'
 
 import { useMutation } from '@apollo/client';
 import { Mutation } from '../../../server/Schema/resolvers';
-import Auth from '../../../server/middleware/authMiddleware';
+import { verifyJWT, signJWT } from '../../../server/middleware/authMiddleware';
 
 const MyNavbar = () => {
   const [showLogin, setShowLogin] = useState(false);

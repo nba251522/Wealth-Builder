@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const authMiddleware = (req, res, next) => {
+const verifyJWT = (req, res, next) => {
     try {
         const token = req.headers.authorization.split(' ')[1]; // Bearer <token>
         if (!token) {
@@ -16,4 +16,9 @@ const authMiddleware = (req, res, next) => {
     }
 };
 
-module.exports = authMiddleware;
+const signJWT = ({ _id, email, username }) => {
+    const payload = { _id, email, username };
+    return jwt.sign({ data: payload }, process.env.JWT_SECRET, { expiresIn: '2h' });
+};
+
+module.exports = { verifyJWT, signJWT };
