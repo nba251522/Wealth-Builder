@@ -31,7 +31,6 @@ const MyNavbar = () => {
           <Nav.Link href="/API" active>Stock Tracker</Nav.Link>
           <Nav.Link href="/Budget" active>Budget</Nav.Link>
           <NavDropdown title="Select Trackers" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/Debit">Debit</NavDropdown.Item>
             <NavDropdown.Item href="/Expense">Expense</NavDropdown.Item>
             <NavDropdown.Item href="/Income">Income</NavDropdown.Item>
             <NavDropdown.Item href="/Savings">Savings</NavDropdown.Item>
