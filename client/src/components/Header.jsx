@@ -5,14 +5,16 @@ import Logo from '../assets/WB.png'
 import '../styles/headfoot.css'
 
 const MyNavbar = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [showLogin, setShowLogin] = useState(false);
+  const [showRegister, setShowRegister] = useState(false);
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    // Add your search functionality here
-    console.log('Searching for:', searchTerm);
-  };
+  const handleLoginClose = () => setShowLogin(false);
+  const handleLoginShow = () => setShowLogin(true);
+  const handleRegisterClose = () => setShowRegister(false);
+  const handleRegisterShow = () => setShowRegister(true);
+
   return (
+    <>
     <Navbar className='headfoot' bg="body-tertiary" expand="lg">
       <Navbar.Brand href="/">
         <img
@@ -25,33 +27,45 @@ const MyNavbar = () => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="navbarSupportedContent" />
       <Navbar.Collapse id="navbarSupportedContent">
-        <Nav className="me-auto">
-        <Nav.Link href="/" active>Login</Nav.Link>
+        <Nav className="mx-auto">
           <Nav.Link href="/" active>Home</Nav.Link>
-          <Nav.Link href="/API" active>Stock Tracker</Nav.Link>
-          <Nav.Link href="/Budget" active>Budget</Nav.Link>
-          <NavDropdown title="Select Trackers" id="basic-nav-dropdown">
-            <NavDropdown.Item href="/Debit">Debit</NavDropdown.Item>
-            <NavDropdown.Item href="/Expense">Expense</NavDropdown.Item>
-            <NavDropdown.Item href="/Income">Income</NavDropdown.Item>
-            <NavDropdown.Item href="/Savings">Savings</NavDropdown.Item>
-            <NavDropdown.Item href="/SavingsGoal">Savings Goals</NavDropdown.Item>
-          </NavDropdown>
+          <Button type="button" onClick={handleLoginShow} className="btn btn-dark">Login</Button>
         </Nav>
-        <Form onSubmit={handleSearchSubmit} className="ml-auto d-flex">
-          <FormControl
-            type="search"
-            placeholder="Search"
-            aria-label="Search"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <Button variant="success" type="submit">
-            Search
-          </Button>
-        </Form>
       </Navbar.Collapse>
     </Navbar>
+
+    <Modal show={showLogin} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group controlId="formUsername">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="username" placeholder="Enter username" />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+                </Form.Text>
+            </Form.Group>
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Password" />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Login
+            </Button>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleLoginClose}>
+            Close
+          </Button>
+          <Button variant="secondary" onClick={() => { handleLoginClose(); handleRegisterShow(); }}>
+            Need an account? Sign Up
+          </Button>
+        </Modal.Footer>
+      </Modal>
+      </>
   );
 };
 
