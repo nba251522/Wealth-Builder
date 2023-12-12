@@ -26,8 +26,9 @@ const MyNavbar = () => {
       <Navbar.Toggle aria-controls="navbarSupportedContent" />
       <Navbar.Collapse id="navbarSupportedContent">
         <Nav className="me-auto">
+        <Nav.Link href="/" active>Login</Nav.Link>
           <Nav.Link href="/" active>Home</Nav.Link>
-          <Nav.Link href="/API" active>API</Nav.Link>
+          <Nav.Link href="/API" active>Stock Tracker</Nav.Link>
           <Nav.Link href="/Budget" active>Budget</Nav.Link>
           <NavDropdown title="Select Trackers" id="basic-nav-dropdown">
             <NavDropdown.Item href="/Debit">Debit</NavDropdown.Item>

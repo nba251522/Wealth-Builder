@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Card, Form } from 'react-bootstrap';
-import Debit from './budgetinfo/Debt';
 import Expense from './budgetinfo/Expense';
 import Income from './budgetinfo/Income';
 import Savings from './budgetinfo/Savings';
