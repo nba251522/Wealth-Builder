@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import '../styles/headfoot.css'
 
 class Footer extends Component {
     render() {
@@ -10,7 +10,7 @@ class Footer extends Component {
         const Thomas = "https://github.com/nba251522";
 
         return (
-            <footer className="bg-dark text-light py-4">
+            <footer className="headfoot">
                 <div className="container">
                     <div className="row">
                         <div className="col-md-6">
