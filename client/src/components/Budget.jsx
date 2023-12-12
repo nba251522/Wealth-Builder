@@ -3,8 +3,7 @@ import { Container, Row, Col, Card, Form } from 'react-bootstrap';
 import Expense from './budgetinfo/Expense';
 import Income from './budgetinfo/Income';
 import Savings from './budgetinfo/Savings';
-import SavingsGoal from './budgetinfo/savingsGoal';
-import '../styles/Budget.css'
+import SavingsGoal from './budgetinfo/SavingsGoal';
 
 const Budget = () => {
     const [totalIncome, setTotalIncome] = useState(0);
@@ -19,12 +18,15 @@ const Budget = () => {
     const handleExpenseChange = (amount) => {
         setTotalExpense(amount);
     };
+
     const handleSavingsChange = (amount) => {
         setTotalSavings(amount);
     };
+
     const handleSavingsGoalChange = (amount) => {
         setTotalSavingsGoal(amount);
     };
+
     return (
         <Container className='budget'>
             <Row className="mt-3">
@@ -52,7 +54,7 @@ const Budget = () => {
                     </Card>
                 </Col>
             </Row>
-            <Row>
+            <Row className="mt-3">
                 <Col>
                     <Income onIncomeChange={handleIncomeChange} />
                 </Col>

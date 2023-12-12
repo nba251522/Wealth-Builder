@@ -6,15 +6,28 @@ const Income = () => {
   const [newItemAmount, setNewItemAmount] = useState('');
   const [newItemSource, setNewItemSource] = useState('');
   const [totalIncome, setTotalIncome] = useState(0);
+  const [amountError, setAmountError] = useState('');
 
   const handleAddIncome = () => {
     if (newItemAmount.trim() !== '' && newItemSource.trim() !== '') {
       const amount = parseFloat(newItemAmount);
-      setIncomeItems([...incomeItems, { amount, source: newItemSource }]);
-      setTotalIncome(totalIncome + amount);
-      setNewItemAmount('');
-      setNewItemSource('');
+      if (!isNaN(amount) && amount > 0) {
+        setIncomeItems([...incomeItems, { amount, source: newItemSource }]);
+        setTotalIncome(totalIncome + amount);
+        setNewItemAmount('');
+        setNewItemSource('');
+        setAmountError('');
+      } else {
+        setAmountError('Please enter a valid positive number for the amount.');
+      }
     }
+  };
+
+  const handleRemoveIncome = (index) => {
+    const removedItem = incomeItems[index];
+    const updatedIncomeItems = incomeItems.filter((item, i) => i !== index);
+    setIncomeItems(updatedIncomeItems);
+    setTotalIncome(totalIncome - removedItem.amount);
   };
 
   return (
@@ -30,6 +43,7 @@ const Income = () => {
                     <th>#</th>
                     <th>Source</th>
                     <th>Amount</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -38,6 +52,11 @@ const Income = () => {
                       <td>{index + 1}</td>
                       <td>{item.source}</td>
                       <td>${item.amount.toFixed(2)}</td>
+                      <td>
+                        <Button variant="danger" onClick={() => handleRemoveIncome(index)}>
+                          Remove
+                        </Button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -66,8 +85,12 @@ const Income = () => {
                     type="number"
                     placeholder="Enter amount"
                     value={newItemAmount}
-                    onChange={(e) => setNewItemAmount(e.target.value)}
+                    onChange={(e) => {
+                      setNewItemAmount(e.target.value);
+                      setAmountError('');
+                    }}
                   />
+                  <Form.Text className="text-danger">{amountError}</Form.Text>
                 </Form.Group>
                 <Button variant="primary" onClick={handleAddIncome}>
                   Add Income

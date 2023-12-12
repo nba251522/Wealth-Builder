@@ -1,13 +1,13 @@
 
-import React, { useState } from 'react';
-import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
+import React from 'react';
+import { Navbar, Nav, } from 'react-bootstrap';
 import Logo from '../assets/WB.png'
 import '../styles/headfoot.css'
 
-const MyNavbar = () => {
-  
+const Header = () => {
+
   return (
-    <Navbar className='headfoot' bg="body-tertiary" expand="lg">
+    <Navbar className="bg-secondary" expand="lg">
       <Navbar.Brand href="/">
         <img
           src={Logo}
@@ -19,8 +19,8 @@ const MyNavbar = () => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="navbarSupportedContent" />
       <Navbar.Collapse id="navbarSupportedContent">
-        <Nav className="me-auto">
-        <Nav.Link href="/" active>Budget</Nav.Link>
+        <Nav className="me-auto text">
+          <Nav.Link href="/" active>Budget</Nav.Link>
           <Nav.Link href="/StockTracker" active>Stock Tracker</Nav.Link>
           <Nav.Link href="/AboutUs" active>AboutUs</Nav.Link>
           <Nav.Link href="/Login" active>Login</Nav.Link>
@@ -30,4 +30,4 @@ const MyNavbar = () => {
   );
 };
 
-export default MyNavbar;
+export default Header;
