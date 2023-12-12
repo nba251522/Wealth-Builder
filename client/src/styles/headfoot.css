@@ -1,5 +1,13 @@
-.headfoot {
-    background-color: #989392;
-    font-weight: bolder;
+.custom-link {
+    color: black;
+  }
+
+  .custom {
     font-size: larger;
-}
+    font-weight: bold;
+  }
+
+  .text {
+    font-size: xx-large;
+    font-weight: bold;
+  }
