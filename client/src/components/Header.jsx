@@ -1,8 +1,12 @@
 
 import React, { useState } from 'react';
-import { Navbar, Nav, NavDropdown, Form, FormControl, Button } from 'react-bootstrap';
+import { Navbar, Nav, Form, Button, Modal } from 'react-bootstrap';
 import Logo from '../assets/WB.png'
 import '../styles/headfoot.css'
+
+import { useMutation } from '@apollo/client';
+import { Mutation } from '../../../server/Schema/resolvers';
+import Auth from '../../../server/middleware/authMiddleware';
 
 const MyNavbar = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -12,6 +16,52 @@ const MyNavbar = () => {
   const handleLoginShow = () => setShowLogin(true);
   const handleRegisterClose = () => setShowRegister(false);
   const handleRegisterShow = () => setShowRegister(true);
+
+  const [login, { loginError }] = useMutation(Mutation.login);
+  const [register, { signUpError }] = useMutation(Mutation.register);
+
+  const loginFormSubmit = async (event) => {
+    event.preventDefault();
+
+    // Parse form data
+    const formData = new FormData(e.target); 
+    const formDataObj = Object.fromEntries(formData.entries());
+
+    try {
+      const { data } = await login({
+        variables: {
+          email: formDataObj.email,
+          password: formDataObj.password,
+        },
+      });
+
+      Auth.login(data.login.token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const signUpFormSubmit = async (event) => {
+    event.preventDefault();
+    
+    // Parse form data
+    const formData = new FormData(e.target);
+    const formDataObj = Object.fromEntries(formData.entries());
+
+    try {
+      const { data } = await register({
+        variables: {
+          email: formDataObj.email,
+          username: formDataObj.username,
+          password: formDataObj.password,
+        },
+      });
+
+      Auth.login(data.register.token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <>
@@ -39,14 +89,14 @@ const MyNavbar = () => {
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
-            <Form.Group controlId="formUsername">
-              <Form.Label>Username</Form.Label>
-              <Form.Control type="username" placeholder="Enter username" />
+          <Form onSubmit={loginFormSubmit}>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" />
             </Form.Group>
             <Form.Group controlId="formPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control type="password" placeholder="Enter password" />
             </Form.Group>
             <Button variant="primary" type="submit">
               Login
@@ -68,10 +118,10 @@ const MyNavbar = () => {
           <Modal.Title>Sign Up</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={signUpFormSubmit}>
             <Form.Group controlId="formEmail">
               <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter your email" />
+              <Form.Control type="email" placeholder="Enter email" />
               <Form.Text className="text-muted">
                 We'll never share your email with anyone else.
                 </Form.Text>
@@ -82,7 +132,7 @@ const MyNavbar = () => {
             </Form.Group>
             <Form.Group controlId="formPassword">
               <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Password" />
+              <Form.Control type="password" placeholder="Enter password" />
             </Form.Group>
             <Button variant="primary" type="submit">
               Sign Up
