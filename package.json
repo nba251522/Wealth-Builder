@@ -7,23 +7,14 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "develop": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
     "server": "cd server && npm start",
-    "client": "cd client && npm start",
+    "client": "cd client && npm run dev",
     "seed": "cd server && npm run seed",
-    "build": "cd client && npm run build"
+    "build": "cd client && npm run build",
+    "install": "cd server && npm i && cd ../client && npm i"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "apollo-server-express": "^3.13.0",
-    "bcryptjs": "^2.4.3",
-    "dotenv": "^16.3.1",
-    "graphql": "^16.8.1",
-    "graphql-tools": "^9.0.0",
-    "jsonwebtoken": "^9.0.2",
-    "mongoose": "^8.0.2",
-    "punycode": "^2.3.1"
-  },
   "devDependencies": {
     "concurrently": "^8.2.2"
   }
