@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
 
-const API_KEY = 'YOUR_API_KEY';
+const API_KEY = 'OGY1AQHUQBNVEVJL';
 
 const StockTracker = () => {
   const [symbol, setSymbol] = useState('AAPL');
