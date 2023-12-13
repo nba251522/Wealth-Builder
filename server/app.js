@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const dbConfig = require('./config/dbConfig');
 const typeDefs = require('./Schema/typeDefs');
 const resolvers = require('./Schema/resolvers');
-const authMiddleware = require('./middleware/authMiddleware'); 
+const { verifyJWT, signJWT } = require('./middleware/authMiddleware'); 
 const errorMiddleware = require('./middleware/errorMiddleware');
 
 const app = express();
@@ -26,7 +26,8 @@ app.use(express.json());
 const server = new ApolloServer({ 
     typeDefs, 
     resolvers,
-    context: ({ req }) => ({ req })
+    context: ({ req }) => ({ req }),
+    errorPolicy: 'all'
 });
 
 async function startServer() {
@@ -37,10 +38,11 @@ async function startServer() {
     server.applyMiddleware({ app, path: '/graphql' });
 
     // Use other middleware
-    app.use(authMiddleware);
+    app.use(verifyJWT);
+    app.use(signJWT);
     app.use(errorMiddleware); 
 
-    const PORT = process.env.PORT || 4000;
+    const PORT = process.env.PORT || 3001;
     app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT} 🚀`));
 }
 
