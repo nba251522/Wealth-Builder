@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
 
-const Savings = () => {
+const Savings = (props) => {
   const [savingsItems, setSavingsItems] = useState([]);
   const [newItemAmount, setNewItemAmount] = useState('');
   const [newItemSource, setNewItemSource] = useState('');
@@ -16,6 +16,7 @@ const Savings = () => {
       if (!isNaN(amount) && amount > 0) {
         setSavingsItems([...savingsItems, { amount, source: newItemSource }]);
         setTotalSavings(totalSavings + amount);
+        props.onSavingsChange(totalSavings + amount);
         setNewItemAmount('');
         setNewItemSource('');
         setAmountError('');
@@ -30,6 +31,7 @@ const Savings = () => {
     const updatedSavingsItems = savingsItems.filter((item, i) => i !== index);
     setSavingsItems(updatedSavingsItems);
     setTotalSavings(totalSavings - removedItem.amount);
+    props.onSavingsChange(totalSavings - removedItem.amount);
   };
 
   return (
@@ -39,7 +41,7 @@ const Savings = () => {
           <Card className="bg-secondary">
             <Card.Body>
               <h2>Savings Log</h2>
-              
+
               <Table striped bordered hover>
                 <thead>
                   <tr>
