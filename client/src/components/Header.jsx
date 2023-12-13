@@ -3,7 +3,7 @@ import { Navbar, Nav, Form, Button, Modal } from 'react-bootstrap';
 import Logo from '../assets/WB.png'
 import '../styles/headfoot.css'
 
-import { useMutation } from '@apollo/client';
+// import { useMutation } from '@apollo/client';
 import { LOGIN_USER, CREATE_USER } from '../utils/mutations';
 
 const MyNavbar = () => {
@@ -15,8 +15,8 @@ const MyNavbar = () => {
   const handleRegisterClose = () => setShowRegister(false);
   const handleRegisterShow = () => setShowRegister(true);
 
-  const [login, { error: loginError }] = useMutation(LOGIN_USER);
-  const [register, { error: signUpError }] = useMutation(CREATE_USER);
+  // const [login, { error: loginError }] = useMutation(LOGIN_USER);
+  // const [register, { error: signUpError }] = useMutation(CREATE_USER);
 
   const loginFormSubmit = async (event) => {
     event.preventDefault();
@@ -39,7 +39,7 @@ const MyNavbar = () => {
       return { token, user };
       
     } catch (err) {
-      console.error(loginError);
+      // console.error(loginError);
     }
   };
 
@@ -63,7 +63,7 @@ const MyNavbar = () => {
 
       return { token, user };
     } catch (err) {
-      console.error(signUpError);
+      // console.error(signUpError);
     }
   };
 
