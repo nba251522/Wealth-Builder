@@ -7,6 +7,8 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER, CREATE_USER } from '../utils/mutations';
 import { Link, useLocation } from 'react-router-dom';
 
+import Auth from '../utils/auth';
+
 const MyNavbar = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
@@ -29,10 +31,19 @@ const MyNavbar = () => {
   useEffect(() => {
     if (signUpData) {
       console.log("sign up data:", signUpData);
+      if (signUpData.register.token) {
+
+        Auth.login(signUpData.register.token);
+        window.location.reload();
+      }
     }
-    
+
     if (loginData) {
       console.log("login data:", loginData);
+      if (loginData.login.token) {
+        console.log()
+        Auth.login(loginData.login.token);
+      }
     }
   }, [signUpData, loginData])
 
@@ -42,7 +53,7 @@ const MyNavbar = () => {
 
     try {
       // Getting { token, user } from server-side
-      const { data } = await login({
+      await login({
         variables: {
           email: loginEmail,
           password: loginPassword,
@@ -80,6 +91,12 @@ const MyNavbar = () => {
       console.error(signUpError);
     }
   };
+
+  const onClickLogout = async (event) => {
+    event.preventDefault();
+
+    Auth.logout();
+  }
 
   const onChangeLoginEmail = (event) => {
     setLoginEmail(event.target.value)
@@ -142,7 +159,10 @@ const MyNavbar = () => {
             >
               About Us
             </Link>
-            <Button type="button" onClick={handleLoginShow} className="btn btn-dark">Login</Button>
+            {Auth.loggedIn() ?
+              <Button type="button" onClick={onClickLogout} className="btn btn-dark">Logout</Button> :
+              <Button type="button" onClick={handleLoginShow} className="btn btn-dark">Login</Button>
+            }
           </Nav>
         </Navbar.Collapse>
       </Navbar>
