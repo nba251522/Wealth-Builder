@@ -3,8 +3,9 @@ import { Navbar, Nav, Form, Button, Modal } from 'react-bootstrap';
 import Logo from '../assets/WB.png'
 import '../styles/headfoot.css'
 
-// import { useMutation } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { LOGIN_USER, CREATE_USER } from '../utils/mutations';
+import { Link, useLocation } from 'react-router-dom';
 
 const MyNavbar = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -15,8 +16,8 @@ const MyNavbar = () => {
   const handleRegisterClose = () => setShowRegister(false);
   const handleRegisterShow = () => setShowRegister(true);
 
-  // const [login, { error: loginError }] = useMutation(LOGIN_USER);
-  // const [register, { error: signUpError }] = useMutation(CREATE_USER);
+  const [login, { error: loginError }] = useMutation(LOGIN_USER);
+  const [register, { error: signUpError }] = useMutation(CREATE_USER);
 
   const loginFormSubmit = async (event) => {
     event.preventDefault();
@@ -39,7 +40,7 @@ const MyNavbar = () => {
       return { token, user };
       
     } catch (err) {
-      // console.error(loginError);
+      console.error(loginError);
     }
   };
 
@@ -49,7 +50,7 @@ const MyNavbar = () => {
     // Parse form data
     const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
-
+    
     try {
       const { data } = await register({
         variables: {
@@ -82,9 +83,32 @@ const MyNavbar = () => {
       <Navbar.Toggle aria-controls="navbarSupportedContent" />
       <Navbar.Collapse id="navbarSupportedContent">
         <Nav className="me-auto text">
-          <Nav.Link href="/" active>Budget</Nav.Link>
-          <Nav.Link href="/StockTracker" active>Stock Tracker</Nav.Link>
-          <Nav.Link href="/AboutUs" active>AboutUs</Nav.Link>
+          <Link
+            to={"/"}
+            className={useLocation().pathname === "/" ? 
+            'nav-link active' : 
+            'nav-link'}
+          >
+          Budget
+          </Link>
+
+          <Link
+            to={"/tracker"}
+            className={useLocation().pathname === "/tracker" ? 
+            'nav-link active' : 
+            'nav-link'}
+          >
+          Stock Tracker
+          </Link>
+
+          <Link
+            to={"/about"}
+            className={useLocation().pathname === "/about" ? 
+            'nav-link active' : 
+            'nav-link'}
+          >
+          About Us
+          </Link>
           <Button type="button" onClick={handleLoginShow} className="btn btn-dark">Login</Button>
         </Nav>
       </Navbar.Collapse>
