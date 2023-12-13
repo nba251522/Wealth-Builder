@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
 
-const Income = () => {
+const Income = (props) => {
   const [incomeItems, setIncomeItems] = useState([]);
   const [newItemAmount, setNewItemAmount] = useState('');
   const [newItemSource, setNewItemSource] = useState('');
@@ -14,6 +14,7 @@ const Income = () => {
       if (!isNaN(amount) && amount > 0) {
         setIncomeItems([...incomeItems, { amount, source: newItemSource }]);
         setTotalIncome(totalIncome + amount);
+        props.onIncomeChange(totalIncome + amount);
         setNewItemAmount('');
         setNewItemSource('');
         setAmountError('');
@@ -28,6 +29,7 @@ const Income = () => {
     const updatedIncomeItems = incomeItems.filter((item, i) => i !== index);
     setIncomeItems(updatedIncomeItems);
     setTotalIncome(totalIncome - removedItem.amount);
+    props.onIncomeChange(totalIncome - removedItem.amount);
   };
 
   return (
