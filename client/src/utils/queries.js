@@ -36,16 +36,20 @@ export const QUERY_USER = gql`
 
 `;
 
-export const QUERY_EXPENSES = gql`
+export const QUERY_TRANSACTION = gql`
     {
-        expenses {
+        income {
             _id
-            expenseText
-            expenseAmount
-            createdAt
+            user
+            amount
+            date
+            type
+            category
+            description
         }
     }
 `;
+
 
 export const budget = gql`
     {
