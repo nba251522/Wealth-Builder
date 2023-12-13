@@ -14,6 +14,7 @@ const Income = (props) => {
       if (!isNaN(amount) && amount > 0) {
         setIncomeItems([...incomeItems, { amount, source: newItemSource }]);
         setTotalIncome(totalIncome + amount);
+        props.onIncomeChange(totalIncome + amount);
         setNewItemAmount('');
         setNewItemSource('');
         setAmountError('');
@@ -28,6 +29,7 @@ const Income = (props) => {
     const updatedIncomeItems = incomeItems.filter((item, i) => i !== index);
     setIncomeItems(updatedIncomeItems);
     setTotalIncome(totalIncome - removedItem.amount);
+    props.onIncomeChange(totalIncome - removedItem.amount);
   };
 
   return (
