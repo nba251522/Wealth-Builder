@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
 
-const SavingsGoal = () => {
+const SavingsGoal = (props) => {
   const [savingsItems, setSavingsItems] = useState([]);
   const [newItemAmount, setNewItemAmount] = useState('');
   const [newItemSource, setNewItemSource] = useState('');
@@ -14,6 +14,7 @@ const SavingsGoal = () => {
       if (!isNaN(amount) && amount > 0) {
         setSavingsItems([...savingsItems, { amount, source: newItemSource }]);
         setTotalSavings(totalSavings + amount);
+        props.onSavingsGoalChange(totalSavings + amount);
         setNewItemAmount('');
         setNewItemSource('');
         setAmountError('');
@@ -28,6 +29,7 @@ const SavingsGoal = () => {
     const updatedSavingsItems = savingsItems.filter((item, i) => i !== index);
     setSavingsItems(updatedSavingsItems);
     setTotalSavings(totalSavings - removedItem.amount);
+    props.onSavingsGoalChange(totalSavings - removedItem.amount);
   };
 
   return (

@@ -34,6 +34,7 @@ const userResolvers = {
 
                 const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     
+                // console.log("token:", token);
                 return { token, user };
             } catch (error) {
                 throw new Error(error.message);
@@ -53,7 +54,7 @@ const userResolvers = {
                 }
 
                 const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-
+                // console.log("token:", token);
                 return { token, user };
             } catch (error) {
                 throw new Error(error.message);

@@ -76,12 +76,14 @@ const typeDefs = gql`
         "Delete a savings goal"
         deleteSavingsGoal(id: ID!): MessageResponse
     }
+
 "User model"
     type User {
         id: ID!
         username: String!
         email: String!
     }
+
 "Transaction model"
     type Transaction {
         id: ID!
@@ -91,18 +93,21 @@ const typeDefs = gql`
         description: String
         date: String!
     }
+
 "Budget model"
     type Budget {
         id: ID!
         amount: Float!
         category: String!
     }
+
 "Notification model"
     type Notification {
         id: ID!
         message: String!
         date: String!
     }
+
 "SavingsGoal model"
     type SavingsGoal {
         id: ID!
@@ -110,19 +115,24 @@ const typeDefs = gql`
         amount: Float!
         targetDate: String!
     }
+
 "AuthPayload model"
     type AuthPayload {
         token: String!
+        user: User
     }
+
 "MessageResponse model"
     type MessageResponse {
         message: String!
     }
+
 "UserProfileInput model"
     input UserProfileInput {
         username: String
         email: String
     }
+    
 "TransactionInput model"
     input TransactionInput {
         amount: Float!
@@ -131,16 +141,19 @@ const typeDefs = gql`
         description: String
         date: String!
     }
+    
 "BudgetInput model"
     input BudgetInput {
         amount: Float!
         category: String!
     }
+    
 "NotificationInput model"
     input NotificationInput {
         message: String!
         date: String!
     }
+    
 "SavingsGoalInput model"
     input SavingsGoalInput {
         title: String!
