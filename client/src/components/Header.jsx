@@ -1,12 +1,10 @@
-
 import React, { useState } from 'react';
 import { Navbar, Nav, Form, Button, Modal } from 'react-bootstrap';
 import Logo from '../assets/WB.png'
 import '../styles/headfoot.css'
 
 import { useMutation } from '@apollo/client';
-import { Mutation } from '../../../server/Schema/resolvers';
-import { verifyJWT, signJWT } from '../../../server/middleware/authMiddleware';
+import { LOGIN_USER, CREATE_USER } from '../utils/mutations';
 
 const MyNavbar = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -17,17 +15,18 @@ const MyNavbar = () => {
   const handleRegisterClose = () => setShowRegister(false);
   const handleRegisterShow = () => setShowRegister(true);
 
-  const [login, { loginError }] = useMutation(Mutation.login);
-  const [register, { signUpError }] = useMutation(Mutation.register);
+  const [login, { loginError }] = useMutation(LOGIN_USER);
+  const [register, { signUpError }] = useMutation(CREATE_USER);
 
   const loginFormSubmit = async (event) => {
     event.preventDefault();
 
     // Parse form data
-    const formData = new FormData(e.target); 
+    const formData = new FormData(event.target); 
     const formDataObj = Object.fromEntries(formData.entries());
 
     try {
+      // Getting { token, user } from server-side
       const { data } = await login({
         variables: {
           email: formDataObj.email,
@@ -35,9 +34,12 @@ const MyNavbar = () => {
         },
       });
 
-      Auth.login(data.login.token);
+      const { token, user } = data.login;
+
+      return { token, user };
+      
     } catch (err) {
-      console.log(err);
+      console.error(loginError);
     }
   };
 
@@ -45,7 +47,7 @@ const MyNavbar = () => {
     event.preventDefault();
     
     // Parse form data
-    const formData = new FormData(e.target);
+    const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
 
     try {
@@ -57,9 +59,11 @@ const MyNavbar = () => {
         },
       });
 
-      Auth.login(data.register.token);
+      const { token, user } = data.register;
+
+      return { token, user };
     } catch (err) {
-      console.log(err);
+      console.error(signUpError);
     }
   };
 
@@ -85,7 +89,72 @@ const MyNavbar = () => {
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-    </>
+
+    <Modal show={showLogin} onHide={handleLoginClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Login</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={loginFormSubmit}>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" />
+            </Form.Group>
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Enter password" />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Login
+            </Button>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleLoginClose}>
+            Close
+          </Button>
+          <Button variant="secondary" onClick={() => { handleLoginClose(); handleRegisterShow(); }}>
+            Need an account? Sign Up
+          </Button>
+        </Modal.Footer>
+      </Modal>
+
+    <Modal show={showRegister} onHide={handleRegisterClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Sign Up</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={signUpFormSubmit}>
+            <Form.Group controlId="formEmail">
+              <Form.Label>Email address</Form.Label>
+              <Form.Control type="email" placeholder="Enter email" />
+              <Form.Text className="text-muted">
+                We'll never share your email with anyone else.
+                </Form.Text>
+            </Form.Group>
+            <Form.Group controlId="formUsername">
+              <Form.Label>Username</Form.Label>
+              <Form.Control type="username" placeholder="Enter username" />
+            </Form.Group>
+            <Form.Group controlId="formPassword">
+              <Form.Label>Password</Form.Label>
+              <Form.Control type="password" placeholder="Enter password" />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Sign Up
+            </Button>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleRegisterClose}>
+            Close
+          </Button>
+          <Button variant="secondary" onClick={() => { handleRegisterClose(); handleLoginShow(); }}>
+            Have an account? Login
+          </Button>
+        </Modal.Footer>
+      </Modal>
+  </>
   );
 };
 
