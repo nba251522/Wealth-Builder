@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Navbar, Nav, Form, Button, Modal } from 'react-bootstrap';
 import Logo from '../assets/WB.png'
 import '../styles/headfoot.css'
@@ -15,8 +15,8 @@ const MyNavbar = () => {
   const handleRegisterClose = () => setShowRegister(false);
   const handleRegisterShow = () => setShowRegister(true);
 
-  const [login, { loginError }] = useMutation(LOGIN_USER);
-  const [register, { signUpError }] = useMutation(CREATE_USER);
+  const [login, { error: loginError }] = useMutation(LOGIN_USER);
+  const [register, { error: signUpError }] = useMutation(CREATE_USER);
 
   const loginFormSubmit = async (event) => {
     event.preventDefault();
@@ -29,8 +29,8 @@ const MyNavbar = () => {
       // Getting { token, user } from server-side
       const { data } = await login({
         variables: {
-          email: formDataObj.email,
-          password: formDataObj.password,
+          email: formDataObj.formEmail,
+          password: formDataObj.formPassword,
         },
       });
 
@@ -53,9 +53,9 @@ const MyNavbar = () => {
     try {
       const { data } = await register({
         variables: {
-          email: formDataObj.email,
-          username: formDataObj.username,
-          password: formDataObj.password,
+          email: formDataObj.formEmail,
+          username: formDataObj.formUsername,
+          password: formDataObj.formPassword,
         },
       });
 

@@ -26,7 +26,8 @@ app.use(express.json());
 const server = new ApolloServer({ 
     typeDefs, 
     resolvers,
-    context: ({ req }) => ({ req })
+    context: ({ req }) => ({ req }),
+    errorPolicy: 'all'
 });
 
 async function startServer() {
