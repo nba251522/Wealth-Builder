@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
 
-const Income = () => {
+const Income = (props) => {
   const [incomeItems, setIncomeItems] = useState([]);
   const [newItemAmount, setNewItemAmount] = useState('');
   const [newItemSource, setNewItemSource] = useState('');
