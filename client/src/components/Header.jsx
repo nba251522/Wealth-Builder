@@ -65,6 +65,8 @@ const MyNavbar = () => {
       setSignupUsername('');
       setSignupPassword('');
 
+      setShowRegister(false);
+
       const { token, user } = signUpData.register;
 
       return { token, user };
@@ -74,17 +76,14 @@ const MyNavbar = () => {
   };
 
   const onChangeEmail = (event) => {
-    console.log("event.target.value:", event.target.value);
     setSignupEmail(event.target.value)
   }
 
   const onChangeUsername = (event) => {
-    console.log("event.target.value:", event.target.value);
     setSignupUsername(event.target.value)
   }
 
   const onChangePassword = (event) => {
-    console.log("event.target.value:", event.target.value);
     setSignupPassword(event.target.value)
   }
 
@@ -139,19 +138,44 @@ const MyNavbar = () => {
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={loginFormSubmit}>
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-            </Form.Group>
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Enter password" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Login
-            </Button>
-          </Form>
+          <form onSubmit={loginFormSubmit}>
+            <div className='mb-3'>
+              <label htmlFor='signup-email'>Email:</label>
+              <input
+                id='signup-email'
+                className='form-control'
+                type='text'
+                value={signupEmail}
+                onChange={onChangeEmail}
+                placeholder='name@example.com'
+              />
+            </div>
+
+            <div className='mb-3'>
+              <label htmlFor='signup-username'>Username:</label>
+              <input
+                id='signup-username'
+                className='form-control'
+                type='text'
+                value={signupUsername}
+                onChange={onChangeUsername}
+                placeholder='3 character minimum'
+              />
+            </div>
+
+            <div className='mb-3'>
+              <label htmlFor='signup-password'>Password:</label>
+              <input
+                id='signup-password'
+                className='form-control'
+                type='password'
+                value={signupPassword}
+                onChange={onChangePassword}
+                placeholder='6 character minimum'
+              />
+            </div>
+            <button className='btn btn-primary'>Sign Up</button>
+          </form>
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleLoginClose}>
@@ -206,26 +230,6 @@ const MyNavbar = () => {
             </div>
             <button className='btn btn-primary'>Sign Up</button>
           </form>
-          {/* <Form onSubmit={signUpFormSubmit}>
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group>
-            <Form.Group controlId="formUsername">
-              <Form.Label>Username</Form.Label>
-              <Form.Control type="username" placeholder="Enter username" />
-            </Form.Group>
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Enter password" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Sign Up
-            </Button>
-          </Form> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleRegisterClose}>
