@@ -65,7 +65,7 @@ const MyNavbar = () => {
 
   return (
     <>
-    <Navbar className='headfoot' bg="body-tertiary" expand="lg">
+    <Navbar className="bg-secondary" expand="lg">
       <Navbar.Brand href="/">
         <img
           src={Logo}
@@ -77,77 +77,14 @@ const MyNavbar = () => {
       </Navbar.Brand>
       <Navbar.Toggle aria-controls="navbarSupportedContent" />
       <Navbar.Collapse id="navbarSupportedContent">
-        <Nav className="mx-auto">
-          <Nav.Link href="/" active>Home</Nav.Link>
+        <Nav className="me-auto text">
+          <Nav.Link href="/" active>Budget</Nav.Link>
+          <Nav.Link href="/StockTracker" active>Stock Tracker</Nav.Link>
+          <Nav.Link href="/AboutUs" active>AboutUs</Nav.Link>
           <Button type="button" onClick={handleLoginShow} className="btn btn-dark">Login</Button>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-
-    <Modal show={showLogin} onHide={handleLoginClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Login</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={loginFormSubmit}>
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-            </Form.Group>
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Enter password" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Login
-            </Button>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleLoginClose}>
-            Close
-          </Button>
-          <Button variant="secondary" onClick={() => { handleLoginClose(); handleRegisterShow(); }}>
-            Need an account? Sign Up
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <Modal show={showRegister} onHide={handleRegisterClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Sign Up</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={signUpFormSubmit}>
-            <Form.Group controlId="formEmail">
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type="email" placeholder="Enter email" />
-              <Form.Text className="text-muted">
-                We'll never share your email with anyone else.
-                </Form.Text>
-            </Form.Group>
-            <Form.Group controlId="formUsername">
-              <Form.Label>Username</Form.Label>
-              <Form.Control type="username" placeholder="Enter username" />
-            </Form.Group>
-            <Form.Group controlId="formPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control type="password" placeholder="Enter password" />
-            </Form.Group>
-            <Button variant="primary" type="submit">
-              Sign Up
-            </Button>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleRegisterClose}>
-            Close
-          </Button>
-          <Button variant="secondary" onClick={() => { handleRegisterClose(); handleLoginShow(); }}>
-            Have an account? Login
-          </Button>
-        </Modal.Footer>
-      </Modal>
     </>
   );
 };

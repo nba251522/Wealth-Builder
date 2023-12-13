@@ -6,30 +6,44 @@ const SavingsGoal = () => {
   const [newItemAmount, setNewItemAmount] = useState('');
   const [newItemSource, setNewItemSource] = useState('');
   const [totalSavings, setTotalSavings] = useState(0);
+  const [amountError, setAmountError] = useState('');
 
   const handleAddSavings = () => {
     if (newItemAmount.trim() !== '' && newItemSource.trim() !== '') {
       const amount = parseFloat(newItemAmount);
-      setSavingsItems([...savingsItems, { amount, source: newItemSource }]);
-      setTotalSavings(totalSavings + amount);
-      setNewItemAmount('');
-      setNewItemSource('');
+      if (!isNaN(amount) && amount > 0) {
+        setSavingsItems([...savingsItems, { amount, source: newItemSource }]);
+        setTotalSavings(totalSavings + amount);
+        setNewItemAmount('');
+        setNewItemSource('');
+        setAmountError('');
+      } else {
+        setAmountError('Please enter a valid positive number for the goal amount.');
+      }
     }
+  };
+
+  const handleRemoveSavings = (index) => {
+    const removedItem = savingsItems[index];
+    const updatedSavingsItems = savingsItems.filter((item, i) => i !== index);
+    setSavingsItems(updatedSavingsItems);
+    setTotalSavings(totalSavings - removedItem.amount);
   };
 
   return (
     <Container>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-secondary">
             <Card.Body>
-              <h2>Savings Log</h2>
+              <h2>Savings Goal</h2>
               <Table striped bordered hover>
                 <thead>
                   <tr>
                     <th>#</th>
                     <th>Item</th>
                     <th>Goal Amount</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -38,6 +52,11 @@ const SavingsGoal = () => {
                       <td>{index + 1}</td>
                       <td>{item.source}</td>
                       <td>${item.amount.toFixed(2)}</td>
+                      <td>
+                        <Button variant="danger" onClick={() => handleRemoveSavings(index)}>
+                          Remove
+                        </Button>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
@@ -48,7 +67,7 @@ const SavingsGoal = () => {
       </Row>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-secondary">
             <Card.Body>
               <Form>
                 <Form.Group controlId="formSavingsSource">
@@ -66,8 +85,12 @@ const SavingsGoal = () => {
                     type="number"
                     placeholder="Enter amount"
                     value={newItemAmount}
-                    onChange={(e) => setNewItemAmount(e.target.value)}
+                    onChange={(e) => {
+                      setNewItemAmount(e.target.value);
+                      setAmountError('');
+                    }}
                   />
+                  <Form.Text className="text-danger">{amountError}</Form.Text>
                 </Form.Group>
                 <Button variant="primary" onClick={handleAddSavings}>
                   Goal Amount
@@ -79,7 +102,7 @@ const SavingsGoal = () => {
       </Row>
       <Row>
         <Col>
-          <Card>
+          <Card className="bg-success">
             <Card.Body>
               <h4>Goal Savings: ${totalSavings.toFixed(2)}</h4>
             </Card.Body>
