@@ -1,15 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form } from 'react-bootstrap';
 import Expense from './budgetinfo/Expense';
 import Income from './budgetinfo/Income';
 import Savings from './budgetinfo/Savings';
 import SavingsGoal from './budgetinfo/SavingsGoal';
 
+
 const Budget = () => {
     const [totalIncome, setTotalIncome] = useState(0);
     const [totalExpense, setTotalExpense] = useState(0);
     const [totalSavings, setTotalSavings] = useState(0);
     const [totalSavingsGoal, setTotalSavingsGoal] = useState(0);
+    const [netIncome, setNetIncome] = useState(0);
+
+    useEffect(() => {
+        setNetIncome(totalIncome - totalExpense);
+    }, [totalIncome, totalExpense]);
 
     const handleIncomeChange = (amount) => {
         setTotalIncome(amount);
@@ -34,6 +40,8 @@ const Budget = () => {
                     <Card className="bg-success">
                         <Card.Body>
                             <Card.Title className="mb-4">Budget Summary</Card.Title>
+                            <Card.Subtitle className="mb-2 text-muted">Net Income:</Card.Subtitle>
+                            <Form.Control type="text" value={`$${netIncome}`} readOnly />
                             <Form.Group controlId="totalIncome">
                                 <Form.Label>Total Income:</Form.Label>
                                 <Form.Control type="text" value={`$${totalIncome}`} readOnly />
