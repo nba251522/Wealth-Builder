@@ -10,7 +10,6 @@ const Budget = () => {
     const [totalIncome, setTotalIncome] = useState(0);
     const [totalExpense, setTotalExpense] = useState(0);
     const [totalSavings, setTotalSavings] = useState(0);
-    const [totalSavingsGoal, setTotalSavingsGoal] = useState(0);
     const [netIncome, setNetIncome] = useState(0);
 
     useEffect(() => {
@@ -29,10 +28,6 @@ const Budget = () => {
         setTotalSavings(amount);
     };
 
-    const handleSavingsGoalChange = (amount) => {
-        setTotalSavingsGoal(amount);
-    };
-
     return (
         <Container className='budget'>
             <Row className="mt-3">
@@ -40,24 +35,18 @@ const Budget = () => {
                     <Card className="bg-success">
                         <Card.Body>
                             <Card.Title className="mb-4">Budget Summary</Card.Title>
-                            <Card.Subtitle className="mb-2 text-muted">Net Income:</Card.Subtitle>
-                            <Form.Control type="text" value={`$${netIncome}`} readOnly />
-                            <Form.Group controlId="totalIncome">
-                                <Form.Label>Total Income:</Form.Label>
-                                <Form.Control type="text" value={`$${totalIncome}`} readOnly />
-                            </Form.Group>
-                            <Form.Group controlId="totalExpense">
-                                <Form.Label>Total Expense:</Form.Label>
-                                <Form.Control type="text" value={`$${totalExpense}`} readOnly />
-                            </Form.Group>
-                            <Form.Group controlId="totalSavings">
-                                <Form.Label>Total Savings:</Form.Label>
-                                <Form.Control type="text" value={`$${totalSavings}`} readOnly />
-                            </Form.Group>
-                            <Form.Group controlId="totalSavingsGoal">
-                                <Form.Label>Total Savings Goal:</Form.Label>
-                                <Form.Control type="text" value={`$${totalSavingsGoal}`} readOnly />
-                            </Form.Group>
+                            <Card.Body>
+                                <h4>Total Net Income: ${netIncome.toFixed(2)}</h4>
+                            </Card.Body>
+                            <Card.Body>
+                                <h4>Total Income: ${totalIncome.toFixed(2)}</h4>
+                            </Card.Body>
+                            <Card.Body>
+                                <h4>Total Expense: ${totalExpense.toFixed(2)}</h4>
+                            </Card.Body>
+                            <Card.Body>
+                                <h4>Total Savings: ${totalSavings.toFixed(2)}</h4>
+                            </Card.Body>
                         </Card.Body>
                     </Card>
                 </Col>
@@ -71,9 +60,6 @@ const Budget = () => {
                 </Col>
                 <Col>
                     <Savings onSavingsChange={handleSavingsChange} />
-                </Col>
-                <Col>
-                    <SavingsGoal onSavingsGoalChange={handleSavingsGoalChange} />
                 </Col>
             </Row>
         </Container>
