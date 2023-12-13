@@ -4,16 +4,18 @@ import Expense from './budgetinfo/Expense';
 import Income from './budgetinfo/Income';
 import Savings from './budgetinfo/Savings';
 import SavingsGoal from './budgetinfo/SavingsGoal';
+import CardGroup from 'react-bootstrap/CardGroup';
 
 
 const Budget = () => {
     const [totalIncome, setTotalIncome] = useState(0);
     const [totalExpense, setTotalExpense] = useState(0);
     const [totalSavings, setTotalSavings] = useState(0);
-    const [netIncome, setNetIncome] = useState(0);
+    const [totalSavingsGoal, setTotalSavingsGoal] = useState(0);
+    const [disposableIncome, setDisposableIncome] = useState(0);
 
     useEffect(() => {
-        setNetIncome(totalIncome - totalExpense);
+        setDisposableIncome(totalIncome - totalExpense);
     }, [totalIncome, totalExpense]);
 
     const handleIncomeChange = (amount) => {
@@ -28,25 +30,43 @@ const Budget = () => {
         setTotalSavings(amount);
     };
 
+    const handleSavingsGoalChange = (amount) => {
+        setTotalSavingsGoal(amount);
+    };
+
     return (
         <Container className='budget'>
             <Row className="mt-3">
                 <Col>
                     <Card className="bg-success">
                         <Card.Body>
-                            <Card.Title className="mb-4">Budget Summary</Card.Title>
-                            <Card.Body>
-                                <h4>Total Net Income: ${netIncome.toFixed(2)}</h4>
+                            <Card.Title as="h1" className="mb-4 d-flex justify-content-center align-items-center" style={{ color: 'white' }}>Budget Summary</Card.Title>
+                            <Card.Body className="d-flex justify-content-center align-items-center" style={{ color: 'white' }}>
+                                <h4>Total Disposable Income: ${disposableIncome.toFixed(2)}</h4>
                             </Card.Body>
-                            <Card.Body>
-                                <h4>Total Income: ${totalIncome.toFixed(2)}</h4>
-                            </Card.Body>
-                            <Card.Body>
-                                <h4>Total Expense: ${totalExpense.toFixed(2)}</h4>
-                            </Card.Body>
-                            <Card.Body>
-                                <h4>Total Savings: ${totalSavings.toFixed(2)}</h4>
-                            </Card.Body>
+                            <CardGroup>
+                                <Card>
+                                    <Card.Body>
+                                        <Card.Title>Total Income: ${totalIncome.toFixed(2)}</Card.Title>
+                                    </Card.Body>
+                                </Card>
+                                <Card>
+                                    <Card.Body>
+                                        <Card.Title>Total Expense: ${totalExpense.toFixed(2)}</Card.Title>
+                                    </Card.Body>
+                                </Card>
+                                <Card>
+                                    <Card.Body>
+                                        <Card.Title>Total Savings: ${totalSavings.toFixed(2)}</Card.Title>
+                                    </Card.Body>
+                                </Card>
+                                <Card>
+                                    <Card.Body>
+                                        <Card.Title>Total Savings Goal: ${totalSavingsGoal.toFixed(2)}</Card.Title>
+                                    </Card.Body>
+                                </Card>
+                            </CardGroup>
+                            
                         </Card.Body>
                     </Card>
                 </Col>
@@ -60,6 +80,9 @@ const Budget = () => {
                 </Col>
                 <Col>
                     <Savings onSavingsChange={handleSavingsChange} />
+                </Col>
+                <Col>
+                    <SavingsGoal onSavingsGoalChange={handleSavingsGoalChange} />
                 </Col>
             </Row>
         </Container>
