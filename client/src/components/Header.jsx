@@ -11,6 +11,9 @@ const MyNavbar = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
+  const [loginEmail, setLoginEmail] = useState('');
+  const [loginPassword, setLoginPassword] = useState('');
+
   const [signupEmail, setSignupEmail] = useState('');
   const [signupUsername, setSignupUsername] = useState('');
   const [signupPassword, setSignupPassword] = useState('');
@@ -20,29 +23,36 @@ const MyNavbar = () => {
   const handleRegisterClose = () => setShowRegister(false);
   const handleRegisterShow = () => setShowRegister(true);
 
-  const [login, { error: loginError }] = useMutation(LOGIN_USER);
+  const [login, { error: loginError, data: loginData }] = useMutation(LOGIN_USER);
   const [register, { error: signUpError, data: signUpData }] = useMutation(CREATE_USER);
+
+  useEffect(() => {
+    if (signUpData) {
+      console.log("sign up data:", signUpData);
+    }
+    
+    if (loginData) {
+      console.log("login data:", loginData);
+    }
+  }, [signUpData, loginData])
+
 
   const loginFormSubmit = async (event) => {
     event.preventDefault();
-
-    // Parse form data
-    const formData = new FormData(event.target);
-    const formDataObj = Object.fromEntries(formData.entries());
 
     try {
       // Getting { token, user } from server-side
       const { data } = await login({
         variables: {
-          email: formDataObj.formEmail,
-          password: formDataObj.formPassword,
+          email: loginEmail,
+          password: loginPassword,
         },
       });
 
-      const { token, user } = data.login;
+      setLoginEmail('');
+      setLoginPassword('');
 
-      return { token, user };
-
+      setShowLogin(false)
     } catch (err) {
       console.error(loginError);
     }
@@ -66,24 +76,28 @@ const MyNavbar = () => {
       setSignupPassword('');
 
       setShowRegister(false);
-
-      const { token, user } = signUpData.register;
-
-      return { token, user };
     } catch (err) {
       console.error(signUpError);
     }
   };
 
-  const onChangeEmail = (event) => {
+  const onChangeLoginEmail = (event) => {
+    setLoginEmail(event.target.value)
+  }
+
+  const onChangeLoginPassword = (event) => {
+    setLoginPassword(event.target.value)
+  }
+
+  const onChangeSignupEmail = (event) => {
     setSignupEmail(event.target.value)
   }
 
-  const onChangeUsername = (event) => {
+  const onChangeSignupUsername = (event) => {
     setSignupUsername(event.target.value)
   }
 
-  const onChangePassword = (event) => {
+  const onChangeSignupPassword = (event) => {
     setSignupPassword(event.target.value)
   }
 
@@ -140,41 +154,29 @@ const MyNavbar = () => {
         <Modal.Body>
           <form onSubmit={loginFormSubmit}>
             <div className='mb-3'>
-              <label htmlFor='signup-email'>Email:</label>
+              <label htmlFor='login-email'>Email:</label>
               <input
-                id='signup-email'
+                id='login-email'
                 className='form-control'
                 type='text'
-                value={signupEmail}
-                onChange={onChangeEmail}
+                value={loginEmail}
+                onChange={onChangeLoginEmail}
                 placeholder='name@example.com'
               />
             </div>
 
             <div className='mb-3'>
-              <label htmlFor='signup-username'>Username:</label>
+              <label htmlFor='login-password'>Password:</label>
               <input
-                id='signup-username'
-                className='form-control'
-                type='text'
-                value={signupUsername}
-                onChange={onChangeUsername}
-                placeholder='3 character minimum'
-              />
-            </div>
-
-            <div className='mb-3'>
-              <label htmlFor='signup-password'>Password:</label>
-              <input
-                id='signup-password'
+                id='login-password'
                 className='form-control'
                 type='password'
-                value={signupPassword}
-                onChange={onChangePassword}
+                value={loginPassword}
+                onChange={onChangeLoginPassword}
                 placeholder='6 character minimum'
               />
             </div>
-            <button className='btn btn-primary'>Sign Up</button>
+            <button className='btn btn-primary'>Login</button>
           </form>
         </Modal.Body>
         <Modal.Footer>
@@ -200,7 +202,7 @@ const MyNavbar = () => {
                 className='form-control'
                 type='text'
                 value={signupEmail}
-                onChange={onChangeEmail}
+                onChange={onChangeSignupEmail}
                 placeholder='name@example.com'
               />
             </div>
@@ -212,7 +214,7 @@ const MyNavbar = () => {
                 className='form-control'
                 type='text'
                 value={signupUsername}
-                onChange={onChangeUsername}
+                onChange={onChangeSignupUsername}
                 placeholder='3 character minimum'
               />
             </div>
@@ -224,7 +226,7 @@ const MyNavbar = () => {
                 className='form-control'
                 type='password'
                 value={signupPassword}
-                onChange={onChangePassword}
+                onChange={onChangeSignupPassword}
                 placeholder='6 character minimum'
               />
             </div>
