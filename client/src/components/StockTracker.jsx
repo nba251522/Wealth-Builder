@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
+import '../styles/headfoot.css'
 
-const API_KEY = 'OGY1AQHUQBNVEVJL';
+const STOCK_API_KEY = process.env.STOCK_API_KEY;
+const API_KEY = STOCK_API_KEY;
 
 const StockTracker = () => {
   const [symbol, setSymbol] = useState('AAPL');
@@ -54,25 +56,33 @@ const StockTracker = () => {
     <Container>
       <Row className="justify-content-md-center">
         <Col md={8}>
-          <Card>
+          <Card className="bg-success">
             <Card.Body>
-              <h1>Stock Price Tracker</h1>
+              <Card.Title as="h1" className="mb-4 d-flex justify-content-center align-items-center" style={{ color: 'white' }}>Stock Price Tracker</Card.Title>
               <Form>
                 <Form.Group controlId="symbol">
-                  <Form.Label>Symbol:</Form.Label>
+                  <Form.Label style={{ color: 'white' }}>Stock Symbol:</Form.Label>
                   <Form.Control type="text" value={symbol} onChange={handleSymbolChange} />
                 </Form.Group>
                 <Button variant="primary" onClick={handleRefreshPress} disabled={loading}>
                   Refresh
                 </Button>
               </Form>
-              {loading && <p>Loading...</p>}
-              {price && (
-                <p style={{ fontSize: 24, marginTop: 20 }}>
-                  {symbol}: ${price}
-                </p>
-              )}
-              {!price && !loading && <p style={{ fontSize: 18, marginTop: 20 }}>No data available for {symbol}</p>}
+              <Form className="text-center">
+                {loading && <p>Loading...</p>}
+                {price && (
+                  <p style={{ fontSize: 36, marginTop: 20, color: 'white' }}>
+                    {symbol}: ${price}
+                  </p>
+                )}
+                {!price && !loading && (
+                  <p style={{ fontSize: 18, marginTop: 20, color: 'white' }}>
+                    No data available for {symbol}
+                  </p>
+                )}
+              </Form>
+              <p className="text-center">Stock Symbols will give the most up-to-date information.</p> 
+              <p className="text-center">if you need to look up a Stock Symbol, please check out <Card.Link href="https://stockanalysis.com/stocks/" rel="noopener noreferrer" className="custom-link">Stock Analysis</Card.Link></p>
             </Card.Body>
           </Card>
         </Col>
