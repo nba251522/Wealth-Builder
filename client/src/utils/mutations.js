@@ -37,6 +37,17 @@ export const ADD_TRANSACTION = gql`
     }
 `;
 
+export const REMOVE_TRANSACTION = gql`
+    mutation deleteTransaction($transactionId: ID!) {
+        deleteTransaction(transactionId: $_id) {
+            _id
+            amount
+            description
+            date
+        }
+    }
+`
+
 export const ADD_SAVINGSGOAL = gql`
     mutation addSavingsGoal($amount: Float!, $description: String!, $date: String!) {
         addSavingsGoal(amount: $amount, description: $description, date: $date) {
