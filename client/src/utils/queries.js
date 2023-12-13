@@ -1,44 +1,30 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_ME = gql`
-    {
-        me {
-            _id
-            username
-            email
-            budeget
-            expenses {
-                _id
-                expenseText
-                expenseAmount
-                createdAt
-            }
-        }
-    }
-
-`;
 
 export const QUERY_USER = gql`
     {
-        user {
+        User {
             _id
             username
             email
-            budeget
-            expenses {
+            createdAt
+            updatedAt
+            bio
+            Transaction {
                 _id
-                expenseText
-                expenseAmount
-                createdAt
+                amount
+                date
+                type
+                category
+                description
             }
         }
     }
-
 `;
 
 export const QUERY_TRANSACTION = gql`
     {
-        income {
+        Transaction {
             _id
             user
             amount
@@ -51,10 +37,11 @@ export const QUERY_TRANSACTION = gql`
 `;
 
 
-export const budget = gql`
+export const QUERY_BUDGET = gql`
     {
-        budget {
+        Budget {
             _id
+            user
             limit
             period
             category
@@ -69,13 +56,17 @@ export const budget = gql`
     }
 `;
 
-export const savingsGoal = gql`
+export const QUERY_SAVINGS_GOAL = gql`
     {
-        savingsGoal {
+        SavingsGoal {
             _id
+            user
             goalName
-            savingsGoalAmount
+            goalAmount
+            currentAmount
+            targetDate
             createdAt
+            updatedAt
         }
     }
 `;
