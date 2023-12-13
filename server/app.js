@@ -37,6 +37,14 @@ async function startServer() {
     // Apply the Apollo GraphQL middleware and set the path to /graphql
     server.applyMiddleware({ app, path: '/graphql' });
 
+    if (process.env.NODE_ENV === 'production') {
+        app.use(express.static(path.join(__dirname, '../client/dist')));
+    
+        app.get('*', (req, res) => {
+          res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+        });
+      }    
+
     // Use other middleware
     app.use(verifyJWT);
     app.use(signJWT);
