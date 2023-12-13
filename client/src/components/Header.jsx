@@ -11,19 +11,23 @@ const MyNavbar = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
 
+  const [signupEmail, setSignupEmail] = useState('');
+  const [signupUsername, setSignupUsername] = useState('');
+  const [signupPassword, setSignupPassword] = useState('');
+
   const handleLoginClose = () => setShowLogin(false);
   const handleLoginShow = () => setShowLogin(true);
   const handleRegisterClose = () => setShowRegister(false);
   const handleRegisterShow = () => setShowRegister(true);
 
   const [login, { error: loginError }] = useMutation(LOGIN_USER);
-  const [register, { error: signUpError }] = useMutation(CREATE_USER);
+  const [register, { error: signUpError, data: signUpData }] = useMutation(CREATE_USER);
 
   const loginFormSubmit = async (event) => {
     event.preventDefault();
 
     // Parse form data
-    const formData = new FormData(event.target); 
+    const formData = new FormData(event.target);
     const formDataObj = Object.fromEntries(formData.entries());
 
     try {
@@ -38,7 +42,7 @@ const MyNavbar = () => {
       const { token, user } = data.login;
 
       return { token, user };
-      
+
     } catch (err) {
       console.error(loginError);
     }
@@ -46,75 +50,91 @@ const MyNavbar = () => {
 
   const signUpFormSubmit = async (event) => {
     event.preventDefault();
-    
-    // Parse form data
-    const formData = new FormData(event.target);
-    const formDataObj = Object.fromEntries(formData.entries());
-    
+
     try {
-      const { data } = await register({
+      await register({
         variables: {
-          email: formDataObj.formEmail,
-          username: formDataObj.formUsername,
-          password: formDataObj.formPassword,
+          username: signupUsername,
+          email: signupEmail,
+          password: signupPassword,
         },
       });
 
-      const { token, user } = data.register;
+      // Reset the variables
+      setSignupEmail('');
+      setSignupUsername('');
+      setSignupPassword('');
+
+      const { token, user } = signUpData.register;
 
       return { token, user };
     } catch (err) {
-      // console.error(signUpError);
+      console.error(signUpError);
     }
   };
 
+  const onChangeEmail = (event) => {
+    console.log("event.target.value:", event.target.value);
+    setSignupEmail(event.target.value)
+  }
+
+  const onChangeUsername = (event) => {
+    console.log("event.target.value:", event.target.value);
+    setSignupUsername(event.target.value)
+  }
+
+  const onChangePassword = (event) => {
+    console.log("event.target.value:", event.target.value);
+    setSignupPassword(event.target.value)
+  }
+
   return (
     <>
-    <Navbar className="bg-secondary" expand="lg">
-      <Navbar.Brand href="/">
-        <img
-          src={Logo}
-          width="100"
-          height="100"
-          className="d-inline-block align-top"
-          alt="Wealth Builder Logo"
-        />
-      </Navbar.Brand>
-      <Navbar.Toggle aria-controls="navbarSupportedContent" />
-      <Navbar.Collapse id="navbarSupportedContent">
-        <Nav className="me-auto text">
-          <Link
-            to={"/"}
-            className={useLocation().pathname === "/" ? 
-            'nav-link active' : 
-            'nav-link'}
-          >
-          Budget
-          </Link>
+      <Navbar className="bg-secondary" expand="lg">
+        <Navbar.Brand href="/">
+          <img
+            src={Logo}
+            width="100"
+            height="100"
+            className="d-inline-block align-top"
+            alt="Wealth Builder Logo"
+          />
+        </Navbar.Brand>
+        <Navbar.Toggle aria-controls="navbarSupportedContent" />
+        <Navbar.Collapse id="navbarSupportedContent">
+          <Nav className="me-auto text">
+            <Link
+              to={"/"}
+              className={useLocation().pathname === "/" ?
+                'nav-link active' :
+                'nav-link'}
+            >
+              Budget
+            </Link>
 
-          <Link
-            to={"/tracker"}
-            className={useLocation().pathname === "/tracker" ? 
-            'nav-link active' : 
-            'nav-link'}
-          >
-          Stock Tracker
-          </Link>
+            <Link
+              to={"/tracker"}
+              className={useLocation().pathname === "/tracker" ?
+                'nav-link active' :
+                'nav-link'}
+            >
+              Stock Tracker
+            </Link>
 
-          <Link
-            to={"/about"}
-            className={useLocation().pathname === "/about" ? 
-            'nav-link active' : 
-            'nav-link'}
-          >
-          About Us
-          </Link>
-          <Button type="button" onClick={handleLoginShow} className="btn btn-dark">Login</Button>
-        </Nav>
-      </Navbar.Collapse>
-    </Navbar>
+            <Link
+              to={"/about"}
+              className={useLocation().pathname === "/about" ?
+                'nav-link active' :
+                'nav-link'}
+            >
+              About Us
+            </Link>
+            <Button type="button" onClick={handleLoginShow} className="btn btn-dark">Login</Button>
+          </Nav>
+        </Navbar.Collapse>
+      </Navbar>
 
-    <Modal show={showLogin} onHide={handleLoginClose}>
+      <Modal show={showLogin} onHide={handleLoginClose}>
         <Modal.Header closeButton>
           <Modal.Title>Login</Modal.Title>
         </Modal.Header>
@@ -143,12 +163,50 @@ const MyNavbar = () => {
         </Modal.Footer>
       </Modal>
 
-    <Modal show={showRegister} onHide={handleRegisterClose}>
+      <Modal show={showRegister} onHide={handleRegisterClose}>
         <Modal.Header closeButton>
           <Modal.Title>Sign Up</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={signUpFormSubmit}>
+          <form onSubmit={signUpFormSubmit}>
+            <div className='mb-3'>
+              <label htmlFor='signup-email'>Email:</label>
+              <input
+                id='signup-email'
+                className='form-control'
+                type='text'
+                value={signupEmail}
+                onChange={onChangeEmail}
+                placeholder='name@example.com'
+              />
+            </div>
+
+            <div className='mb-3'>
+              <label htmlFor='signup-username'>Username:</label>
+              <input
+                id='signup-username'
+                className='form-control'
+                type='text'
+                value={signupUsername}
+                onChange={onChangeUsername}
+                placeholder='3 character minimum'
+              />
+            </div>
+
+            <div className='mb-3'>
+              <label htmlFor='signup-password'>Password:</label>
+              <input
+                id='signup-password'
+                className='form-control'
+                type='password'
+                value={signupPassword}
+                onChange={onChangePassword}
+                placeholder='6 character minimum'
+              />
+            </div>
+            <button className='btn btn-primary'>Sign Up</button>
+          </form>
+          {/* <Form onSubmit={signUpFormSubmit}>
             <Form.Group controlId="formEmail">
               <Form.Label>Email address</Form.Label>
               <Form.Control type="email" placeholder="Enter email" />
@@ -167,7 +225,7 @@ const MyNavbar = () => {
             <Button variant="primary" type="submit">
               Sign Up
             </Button>
-          </Form>
+          </Form> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleRegisterClose}>
@@ -178,7 +236,7 @@ const MyNavbar = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-  </>
+    </>
   );
 };
 
