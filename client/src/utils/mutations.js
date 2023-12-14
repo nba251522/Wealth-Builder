@@ -27,13 +27,18 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_TRANSACTION = gql`
-    mutation addTransaction($amount: Float!, $description: String!, $user: ID! $type: String!) {
-        addTransaction(amount: $amount, description: $description, user: $user, type: $type) {
+    mutation addTransaction($amount: Float!, $description: String!, $user: ID!, $type: String!, $category: String!) {
+        addTransaction(amount: $amount, description: $description, user: $user, type: $type, category: $category) {
             _id
-            user
+            user {
+                _id
+                username 
+            }
             amount
-            description
+            date
             type
+            category
+            description
         }
     }
 `;
@@ -41,7 +46,7 @@ export const ADD_TRANSACTION = gql`
 export const REMOVE_TRANSACTION = gql`
     mutation deleteTransaction($transactionId: ID!) {
         deleteTransaction(transactionId: $_id) {
-            _id
+            id
             amount
             description
             date

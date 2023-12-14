@@ -13,7 +13,7 @@ const Expense = (props) => {
   const [amountError, setAmountError] = useState('');
 
 
-  const { loading, error, expenseData } = useQuery(QUERY_EXPENSE, {
+  const { error, data } = useQuery(QUERY_EXPENSE, {
     variables: { _id: props.token },
   });
 
@@ -23,11 +23,11 @@ const Expense = (props) => {
   
   useEffect(() => {
     // Load existing expense items or set to empty array
-    if (!loading && !error) {
-      console.log(loading, error)
-      setExpenseItems(expenseData?.expenses || []);
+    if (!error) {
+      console.log(error)
+      setExpenseItems(data?.expenses || []);
     }
-  }, [loading, error, expenseData, addData, removeData]);
+  }, [error, data, addData, removeData]);
 
   const handleAddExpense = async () => {
     if (newItemAmount.trim() !== '' && newItemSource.trim() !== '') {
@@ -43,16 +43,17 @@ const Expense = (props) => {
         // Add transaction to database
         try {
           await addTransaction({
-            variables: {
-              user: props.token,
-              description: newItemSource,
-              amount: amount,
-              type: 'Expense',
-            },
+              variables: {
+                amount: amount,
+                type: 'Expense',
+                category: 'Expense',
+                description: newItemSource,
+                date: new Date(),
+              },
           });
 
         } catch (err) {
-          console.error(addError);
+          console.error(addError, err);
         }
       } else {
         setAmountError('Please enter a valid positive number for the amount.');
@@ -75,7 +76,7 @@ const Expense = (props) => {
         },
       });
     } catch (err) {
-      console.error(removeError);
+      console.error(removeError, err);
     }
   };
 
