@@ -6,6 +6,7 @@ import Savings from './budgetinfo/Savings';
 import SavingsGoal from './budgetinfo/SavingsGoal';
 import CardGroup from 'react-bootstrap/CardGroup';
 
+import Auth from '../utils/auth';
 
 const Budget = () => {
     const [totalIncome, setTotalIncome] = useState(0);
@@ -33,6 +34,8 @@ const Budget = () => {
     const handleSavingsGoalChange = (amount) => {
         setTotalSavingsGoal(amount);
     };
+
+    const handleTokenProp = Auth.loggedIn() ? Auth.getProfile().userId : { _id: ''};
 
     return (
         <Container className='budget'>
@@ -73,16 +76,16 @@ const Budget = () => {
             </Row>
             <Row className="mt-3">
                 <Col>
-                    <Income onIncomeChange={handleIncomeChange} />
+                    <Income onIncomeChange={handleIncomeChange} token={handleTokenProp} />
                 </Col>
                 <Col>
-                    <Expense onExpenseChange={handleExpenseChange} />
+                    <Expense onExpenseChange={handleExpenseChange} token={handleTokenProp} />
                 </Col>
                 <Col>
-                    <Savings onSavingsChange={handleSavingsChange} />
+                    <Savings onSavingsChange={handleSavingsChange} token={handleTokenProp} />
                 </Col>
                 <Col>
-                    <SavingsGoal onSavingsGoalChange={handleSavingsGoalChange} />
+                    <SavingsGoal onSavingsGoalChange={handleSavingsGoalChange} token={handleTokenProp} />
                 </Col>
             </Row>
         </Container>

@@ -1,56 +1,60 @@
 import { gql } from '@apollo/client';
 
-export const QUERY_ME = gql`
-    {
-        me {
-            _id
-            username
-            email
-            budeget
-            expenses {
-                _id
-                expenseText
-                expenseAmount
-                createdAt
-            }
-        }
-    }
-
-`;
-
 export const QUERY_USER = gql`
     {
-        user {
+        User( _id: $_id) {
             _id
             username
             email
-            budeget
-            expenses {
+            createdAt
+            updatedAt
+            bio
+            Transaction {
                 _id
-                expenseText
-                expenseAmount
-                createdAt
+                amount
+                date
+                type
+                category
+                description
             }
         }
     }
-
 `;
 
-export const QUERY_EXPENSES = gql`
+export const QUERY_INCOME = gql`
     {
-        expenses {
+        Transaction( type: "Income" ) {
             _id
-            expenseText
-            expenseAmount
-            createdAt
+            user
+            amount
+            date
+            type
+            category
+            description
         }
     }
 `;
 
-export const budget = gql`
+export const QUERY_EXPENSE = gql`
     {
-        budget {
+        Transaction( type: "Expense", user: $_id ) {
             _id
+            user
+            amount
+            date
+            type
+            category
+            description
+        }
+    }
+`;
+
+
+export const QUERY_BUDGET = gql`
+    {
+        Budget {
+            _id
+            user
             limit
             period
             category
@@ -65,13 +69,17 @@ export const budget = gql`
     }
 `;
 
-export const savingsGoal = gql`
+export const QUERY_SAVINGS_GOAL = gql`
     {
-        savingsGoal {
+        SavingsGoal {
             _id
+            user
             goalName
-            savingsGoalAmount
+            goalAmount
+            currentAmount
+            targetDate
             createdAt
+            updatedAt
         }
     }
 `;

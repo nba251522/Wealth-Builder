@@ -27,15 +27,32 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_TRANSACTION = gql`
-    mutation addTransaction($amount: Float!, $description: String!, $date: String!) {
-        addTransaction(amount: $amount, description: $description, date: $date) {
+    mutation addTransaction($amount: Float!, $description: String!, $user: ID!, $type: String!, $category: String!) {
+        addTransaction(amount: $amount, description: $description, user: $user, type: $type, category: $category) {
             _id
+            user {
+                _id
+                username 
+            }
+            amount
+            date
+            type
+            category
+            description
+        }
+    }
+`;
+
+export const REMOVE_TRANSACTION = gql`
+    mutation deleteTransaction($transactionId: ID!) {
+        deleteTransaction(transactionId: $_id) {
+            id
             amount
             description
             date
         }
     }
-`;
+`
 
 export const ADD_SAVINGSGOAL = gql`
     mutation addSavingsGoal($amount: Float!, $description: String!, $date: String!) {
@@ -52,6 +69,17 @@ export const ADD_SAVINGSGOAL = gql`
                 description
                 date
             }
+        }
+    }
+`;
+
+export const REMOVE_SAVINGSGOAL = gql`
+    mutation deleteSavingsGoal($transactionId: ID!) {
+        deleteSavingsGoal(transactionId: $_id) {
+            id
+            amount
+            description
+            date
         }
     }
 `;

@@ -24,7 +24,7 @@ class AuthService {
 
   getToken() {
     // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
+    return localStorage.getItem('id_token')
   }
 
   login(idToken) {
@@ -42,4 +42,5 @@ class AuthService {
   }
 }
 
-export default new AuthService();
+const Auth = new AuthService();
+export default Auth;

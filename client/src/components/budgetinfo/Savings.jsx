@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
 
 const Savings = (props) => {
@@ -8,7 +8,9 @@ const Savings = (props) => {
   const [totalSavings, setTotalSavings] = useState(0);
   const [amountError, setAmountError] = useState('');
 
-  const handleAddSavings = (e) => {
+
+
+  const handleAddSavings = async (e) => {
     e.preventDefault();
 
     if (newItemAmount.trim() !== '' && newItemSource.trim() !== '') {

@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
+
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_EXPENSE } from '../../utils/queries';
+import { ADD_TRANSACTION, REMOVE_TRANSACTION } from '../../utils/mutations';
 
 const Expense = (props) => {
   const [expenseItems, setExpenseItems] = useState([]);
@@ -8,7 +12,24 @@ const Expense = (props) => {
   const [totalExpense, setTotalExpense] = useState(0);
   const [amountError, setAmountError] = useState('');
 
-  const handleAddExpense = () => {
+
+  const { error, data } = useQuery(QUERY_EXPENSE, {
+    variables: { _id: props.token },
+  });
+
+  const [addTransaction, { error: addError, data: addData }] = useMutation(ADD_TRANSACTION);
+  const [removeTransaction, { error: removeError, data: removeData }] = useMutation(REMOVE_TRANSACTION);
+
+  
+  useEffect(() => {
+    // Load existing expense items or set to empty array
+    if (!error) {
+      console.log(error)
+      setExpenseItems(data?.expenses || []);
+    }
+  }, [error, data, addData, removeData]);
+
+  const handleAddExpense = async () => {
     if (newItemAmount.trim() !== '' && newItemSource.trim() !== '') {
       const amount = parseFloat(newItemAmount);
       if (!isNaN(amount) && amount > 0) {
@@ -18,6 +39,22 @@ const Expense = (props) => {
         setNewItemAmount('');
         setNewItemSource('');
         setAmountError('');
+
+        // Add transaction to database
+        try {
+          await addTransaction({
+              variables: {
+                amount: amount,
+                type: 'Expense',
+                category: 'Expense',
+                description: newItemSource,
+                date: new Date(),
+              },
+          });
+
+        } catch (err) {
+          console.error(addError, err);
+        }
       } else {
         setAmountError('Please enter a valid positive number for the amount.');
       }
@@ -30,6 +67,17 @@ const Expense = (props) => {
     setExpenseItems(updatedExpenseItems);
     setTotalExpense(totalExpense - removedItem.amount);
     props.onExpenseChange(totalExpense - removedItem.amount);
+    
+    try { 
+      // Remove transaction from database
+      removeTransaction({
+        variables: {
+          _id: removedItem._id,
+        },
+      });
+    } catch (err) {
+      console.error(removeError, err);
+    }
   };
 
   return (
