@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
 
-import { useQuery, useMutation } from '@apollo/client';
-import { QUERY_SAVINGS_GOAL } from '../../utils/queries';
-import { ADD_SAVINGSGOAL, REMOVE_SAVINGSGOAL } from '../../utils/mutations';
-
 const Savings = (props) => {
   const [savingsItems, setSavingsItems] = useState([]);
   const [newItemAmount, setNewItemAmount] = useState('');
@@ -12,21 +8,6 @@ const Savings = (props) => {
   const [totalSavings, setTotalSavings] = useState(0);
   const [amountError, setAmountError] = useState('');
 
-  const { error, data } = useQuery(QUERY_SAVINGS_GOAL, {
-    variables: { _id: props.token },
-  });
-
-  const [addSavingsGoal, { error: addError, data: addData }] = useMutation(ADD_SAVINGSGOAL);
-  const [removeSavingsGoal, { error: removeError, data: removeData }] = useMutation(REMOVE_SAVINGSGOAL);
-
-  
-  useEffect(() => {
-    // Load existing expense items or set to empty array
-    if (!error) {
-      console.log(error)
-      setSavingsItems(data?.savings || []);
-    }
-  }, [error, data, addData, removeData]);
 
 
   const handleAddSavings = async (e) => {
@@ -41,20 +22,6 @@ const Savings = (props) => {
         setNewItemAmount('');
         setNewItemSource('');
         setAmountError('');
-
-        // Add savings goal to database
-        try {
-          await addSavingsGoal({
-              variables: {
-                title: newItemSource,
-                amount: amount,
-                targetDate: new Date() + (30 * 24 * 60 * 60 * 1000),
-              },
-          });
-
-        } catch (err) {
-          console.error(addError, err);
-        }
       } else {
         setAmountError('Please enter a valid positive number for the amount.');
       }
@@ -67,17 +34,6 @@ const Savings = (props) => {
     setSavingsItems(updatedSavingsItems);
     setTotalSavings(totalSavings - removedItem.amount);
     props.onSavingsChange(totalSavings - removedItem.amount);
-
-    try { 
-      // Remove savings goal from database
-      removeSavingsGoal({
-        variables: {
-          _id: removedItem._id,
-        },
-      });
-    } catch (err) {
-      console.error(removeError, err);
-    }
   };
 
   return (
