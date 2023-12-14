@@ -5,7 +5,7 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_EXPENSE } from '../../utils/queries';
 import { ADD_TRANSACTION, REMOVE_TRANSACTION } from '../../utils/mutations';
 
-import Auth from '../utils/auth';
+import Auth from '../../utils/auth';
 
 const Expense = (props) => {
   const [expenseItems, setExpenseItems] = useState([]);
@@ -14,12 +14,20 @@ const Expense = (props) => {
   const [totalExpense, setTotalExpense] = useState(0);
   const [amountError, setAmountError] = useState('');
 
+  const { loading, error, expenseData } = useQuery(QUERY_EXPENSE, {
+    variables: { user: Auth.getProfile().data._id },
+  });
+
   const [addTransaction, { error: addError, data: addData }] = useMutation(ADD_TRANSACTION);
   const [removeTransaction, { error: removeError, data: removeData }] = useMutation(REMOVE_TRANSACTION);
 
   useEffect(() => {
-    getExpenses();
-  }, [addData, removeData]);
+    // Load existing expense items or set to empty array
+    if (!loading && !error) {
+      console.log(loading, error)
+      setExpenseItems(expenseData?.expenses || []);
+    }
+  }, [loading, error, expenseData, addData, removeData]);
 
   const handleAddExpense = async () => {
     if (newItemAmount.trim() !== '' && newItemSource.trim() !== '') {
@@ -32,6 +40,7 @@ const Expense = (props) => {
         setNewItemSource('');
         setAmountError('');
 
+        // Add transaction to database
         try {
           await addTransaction({
             variables: {
@@ -42,7 +51,7 @@ const Expense = (props) => {
           });
 
         } catch (err) {
-          console.error(err);
+          console.error(addError);
         }
       } else {
         setAmountError('Please enter a valid positive number for the amount.');
@@ -58,34 +67,15 @@ const Expense = (props) => {
     props.onExpenseChange(totalExpense - removedItem.amount);
     
     try { 
+      // Remove transaction from database
       removeTransaction({
         variables: {
           _id: removedItem._id,
         },
       });
     } catch (err) {
-      console.error(err);
+      console.error(removeError);
     }
-  };
-
-  const getExpenses = () => {
-    const token = Auth.getToken();
-
-    if (!token || !Auth.isTokenExpired(token)) {
-      console.error("ERROR: User isn't logged in. Please login now.")
-    }
-
-    const user = Auth.getProfile().data;
-
-    const { loading, error, data } = useQuery(QUERY_EXPENSE, {
-      variables: { user: user._id },
-    });
-
-    if (loading) return null;
-    if (error) return `Error! ${error}`;
-
-    const expenseItems = data?.expenses || [];
-    setExpenseItems(expenseItems);
   };
 
   return (
