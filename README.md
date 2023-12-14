@@ -35,7 +35,7 @@ Many of us ask ourselves at the end of the month “Where’d all my money go?!�
 Wealth Builder also provides several points of encouragement to try and get users thinking about saving their money instead of just spending it. Wealth Builder does this by allowing the user to create savings goals with encouraging goal notifications such as “Great job you're almost there”!  Wealth Builders' use of real-time data showing stock prices and finance news gets a user thinking about how to use their money as an investment.
 
 
-![Login And Modify](./public/images/images-for-readme/work-remote-login-view-all.gif)
+![Login And Modify](./client/src/assets/wealth-builder.gif)
 
 ## Table of Contents
 
@@ -51,34 +51,17 @@ Wealth Builder also provides several points of encouragement to try and get user
 2. Open the folder where you placed the files from this repository on your local drive with your Git terminal. Make sure you can see the server.js file and also the package.json file.
 3. Type "run npm init" this will install the necessary node.js modules.
 4. Type “npm install” to install all the necessary dependencies that are called out in the package.json file.
-5. Type “node server” If you have everything set up correctly you will see the message “now listening on http://localhost:3001” This means that your MySQL server database is up and ready to send and receive information from your browser.
-6. Open your browser and go to http://localhost:3001 and you will be able to use your own instance of Work Remote.
+5. Type “npm run start” If you have everything set up correctly you can open http://localhost:3000” (it should open for you automatically) And you will see the site Wealth Builder.
 
 ## Usage and Features
 
 ### User Stories
 
-![3 Types Of Users](./public/images/images-for-readme/3-user-stories.jpg)
+![3 Types Of Users](./client/src/assets/user-stories.png)
 
-#### Concerning Not Logged in Users:
+### User Stories Converted To GraphQL Queries and Mutations
 
-All users can go to the site and are limited to viewing the 6 most recent project posts without being logged in. In order to see all the job posts or to make a job post a user must make an account by entering their user name, email, and password. This information is saved to the server. For security purposes, the user's password is made into a hash by using npm bcrypt and is stored on the server not as a raw password but as a hash.
-
-When a user is a returning user (coming back to the site for a 2nd or more time) when they enter their username and password, bcrypt hashes the password they entered and then looks for a matching hash and username on the server. If a match is found they are logged in. Once logged in the users behavior defines if they are now a Client or Worker.
-
-#### Concerning Client Users
-
-Once logged in, a Client User can go to “My Job Listing” or “Post Job” if they would like to view and edit their existing job posts or make a new job post respectively. If a Client clicks on “My Job Listing” they are taken to a list of all of their current job posts. Once there, each job has the option to “Learn More” (Which shows the entirety of that job post as it is, and is not editable). “Edit” (Which shows the job in an editor where ALL of the job properties are editable. This is really nice if a user wants to modify the requirements of a job, maybe even change the type of job, and can of course modify their budget).
-
-#### Concerning Worker Users
-
-Once logged in, a Worker User can go to “See Jobs” and the entire list of all available jobs will be shown to them. At the same time, a drop-down sort function is given to them at the top of the page where they can select the jobs to be displayed to them by category, where only the category of job they choose will then be shown to them.
-
-The Worker User can then select a job to view by clicking on “Learn More”. That will display for them the listing of the job with all of the details including a contact email at the bottom where if they are interested in the work they can email the job poster. If they click on the email button their e-mail editor will automatically open and the Clients email will be automatically populated.
-
-### User Stories Converted To API Routes
-
-![API Routes](./public/images/images-for-readme/user-stories-to-routes.jpg)
+![API Routes](./client/src/assets/queries-mutations.png)
 
 ## Code Examples
 
@@ -86,7 +69,7 @@ We used Bootstrap as the basis of our framework, along with custom CSS
 
 #### Here Is The Mobile Responsiveness
 
-![Login And Modify](./public/images/images-for-readme/work-remote-mobile.gif)
+![Login And Modify](./client/src/assets/mobile-responsiveness.gif)
 
 ### Models
 
