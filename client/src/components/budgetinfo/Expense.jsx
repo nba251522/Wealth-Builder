@@ -5,8 +5,6 @@ import { useQuery, useMutation } from '@apollo/client';
 import { QUERY_EXPENSE } from '../../utils/queries';
 import { ADD_TRANSACTION, REMOVE_TRANSACTION } from '../../utils/mutations';
 
-import Auth from '../../utils/auth';
-
 const Expense = (props) => {
   const [expenseItems, setExpenseItems] = useState([]);
   const [newItemAmount, setNewItemAmount] = useState('');
@@ -14,13 +12,15 @@ const Expense = (props) => {
   const [totalExpense, setTotalExpense] = useState(0);
   const [amountError, setAmountError] = useState('');
 
+
   const { loading, error, expenseData } = useQuery(QUERY_EXPENSE, {
-    variables: { user: Auth.getProfile().data._id },
+    variables: { _id: props.token },
   });
 
   const [addTransaction, { error: addError, data: addData }] = useMutation(ADD_TRANSACTION);
   const [removeTransaction, { error: removeError, data: removeData }] = useMutation(REMOVE_TRANSACTION);
 
+  
   useEffect(() => {
     // Load existing expense items or set to empty array
     if (!loading && !error) {
@@ -44,7 +44,8 @@ const Expense = (props) => {
         try {
           await addTransaction({
             variables: {
-              source: newItemSource,
+              user: props.token,
+              description: newItemSource,
               amount: amount,
               type: 'Expense',
             },
