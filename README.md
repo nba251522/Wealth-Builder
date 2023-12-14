@@ -71,21 +71,26 @@ We used Bootstrap as the basis of our framework, along with custom CSS
 
 ![Login And Modify](./client/src/assets/mobile-responsiveness.gif)
 
-### Models
+### How A Feature Was Developed Using GraphQL and React
 
-Below is the project code for the User Model found in the User.js
+![User Model](./client/src/assets/1-how-it-works.png)
 
-![User Model](./public/images/images-for-readme/user-model.jpg)
+We started in the back end by modeling out how we wanted a data set to look.  Here is the Model and Seed for a Transaction
 
-Here are a couple interesting pieces of code from the project.
+![Login And Modify](./client/src/assets/2-model-and-seed.png)
 
-First, here is the route to the job board (the actual home route) JavaScript from home-routes.js showing the jobs available on the site. Limited to 6 if the user is not logged in, but will show all if the user is logged in.
+Then we made the GraphQL Resolver to add the Transaction to the MongoDB
 
-![Login And Modify](./public/images/images-for-readme/job-list.jpg)
+![Login And Modify](./client/src/assets/3-mutation-example.png)
 
-Second, here is code from the dashboard.handlebars useing Handlebars.js showing how it autogenerates the HTML for the dashboard.
+Then on the front end we used React to build a Transaction Component
 
-![Login And Modify](./public/images/images-for-readme/handlebars-job-postings.png)
+![Login And Modify](./client/src/assets/4-react-component.png)
+
+Then we made the GraphQL Mutation to move the Transaction into the MongoDB from the front end (When the User enters it in)
+
+![Login And Modify](./client/src/assets/5-front-end-mutation.png)
+
 
 ## Author Info
 
