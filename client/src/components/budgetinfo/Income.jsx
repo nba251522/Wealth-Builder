@@ -1,5 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Table, Button, Form, Row, Col, Container, Card } from 'react-bootstrap';
+
+import { useQuery, useMutation } from '@apollo/client';
+import { QUERY_INCOME } from '../../utils/queries';
+import { ADD_TRANSACTION, REMOVE_TRANSACTION } from '../../utils/mutations';
 
 const Income = (props) => {
   const [incomeItems, setIncomeItems] = useState([]);
@@ -8,7 +12,21 @@ const Income = (props) => {
   const [totalIncome, setTotalIncome] = useState(0);
   const [amountError, setAmountError] = useState('');
 
-  const handleAddIncome = () => {
+  const { error, data } = useQuery(QUERY_INCOME, {
+    variables: { _id: props.token },
+  });
+
+  const [addTransaction, { error: addError, data: addData }] = useMutation(ADD_TRANSACTION);
+  const [removeTransaction, { error: removeError, data: removeData }] = useMutation(REMOVE_TRANSACTION);
+
+  useEffect(() => {
+    // Load existing expense items or set to empty array
+    if (!error) {
+      setIncomeItems(data?.income || []);
+    }
+  }, [error, data, addData, removeData]);
+
+  const handleAddIncome = async () => {
     if (newItemAmount.trim() !== '' && newItemSource.trim() !== '') {
       const amount = parseFloat(newItemAmount);
       if (!isNaN(amount) && amount > 0) {
@@ -18,6 +36,22 @@ const Income = (props) => {
         setNewItemAmount('');
         setNewItemSource('');
         setAmountError('');
+
+        // Add transaction to database
+        try {
+          await addTransaction({
+              variables: {
+                amount: amount,
+                type: 'Expense',
+                category: 'Expense',
+                description: newItemSource,
+                date: new Date(),
+              },
+          });
+
+        } catch (err) {
+          console.error(addError, err);
+        }
       } else {
         setAmountError('Please enter a valid positive number for the amount.');
       }
@@ -30,6 +64,17 @@ const Income = (props) => {
     setIncomeItems(updatedIncomeItems);
     setTotalIncome(totalIncome - removedItem.amount);
     props.onIncomeChange(totalIncome - removedItem.amount);
+
+    try { 
+      // Remove transaction from database
+      removeTransaction({
+        variables: {
+          _id: removedItem._id,
+        },
+      });
+    } catch (err) {
+      console.error(removeError, err);
+    }
   };
 
   return (
